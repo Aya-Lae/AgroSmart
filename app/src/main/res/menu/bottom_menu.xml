@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/chatbotFragment"
+        android:title="Chatbot"
+        android:icon="@android:drawable/ic_menu_send" />
+
+    <item
+        android:id="@+id/calendrierFragment"
+        android:title="Calendrier"
+        android:icon="@android:drawable/ic_menu_today" />
+
+    <item
+        android:id="@+id/meteoFragment"
+        android:title="Météo"
+        android:icon="@android:drawable/ic_menu_compass" />
+
+    <item
+        android:id="@+id/profilFragment"
+        android:title="Profil"
+        android:icon="@android:drawable/ic_menu_myplaces" />
+
+    <item
+        android:id="@+id/baseFragment"
+        android:title="Base"
+        android:icon="@android:drawable/ic_menu_info_details" />
+
+</menu>

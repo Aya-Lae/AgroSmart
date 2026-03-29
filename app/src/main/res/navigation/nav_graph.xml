@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/chatbotFragment">
+
+    <fragment
+        android:id="@+id/chatbotFragment"
+        android:name="com.example.tryproject.ChatbotFragment"
+        android:label="Chatbot" />
+
+    <fragment
+        android:id="@+id/calendrierFragment"
+        android:name="com.example.tryproject.CalendrierFragment"
+        android:label="Calendrier" />
+
+    <fragment
+        android:id="@+id/meteoFragment"
+        android:name="com.example.tryproject.MeteoFragment"
+        android:label="Météo" />
+
+    <fragment
+        android:id="@+id/profilFragment"
+        android:name="com.example.tryproject.ProfilFragment"
+        android:label="Profil" />
+
+    <fragment
+        android:id="@+id/baseFragment"
+        android:name="com.example.tryproject.BaseFragment"
+        android:label="Base" />
+
+</navigation>
