@@ -3,20 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="6dp">
 
-    <TextView
-        android:id="@+id/txt_auteur"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/txt_message"
-        android:textSize="15sp"
+    <!-- Bulle utilisateur (droite, verte) -->
+    <LinearLayout
+        android:id="@+id/bulle_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"/>
+        android:layout_gravity="end"
+        android:background="@drawable/bulle_user"
+        android:padding="12dp"
+        android:layout_marginStart="60dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txt_message_user"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Bulle bot (gauche, crème) -->
+    <LinearLayout
+        android:id="@+id/bulle_bot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:background="@drawable/bulle_bot"
+        android:padding="12dp"
+        android:layout_marginEnd="60dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txt_message_bot"
+            android:textColor="#3E2723"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </LinearLayout>

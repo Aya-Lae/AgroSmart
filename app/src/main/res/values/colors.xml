@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="vert_principal">#2E7D32</color>
+    <color name="vert_clair">#4CAF50</color>
+    <color name="vert_tres_fonce">#1B5E20</color>
+    <color name="dore">#F9A825</color>
+    <color name="fond_clair">#F5F5F5</color>
+    <color name="blanc">#FFFFFF</color>
+    <color name="texte_gris">#757575</color>
+    <color name="alerte_rouge">#F44336</color>
+    <color name="alerte_jaune">#FFF9C4</color>
+    <color name="bulle_user">#C8E6C9</color>
+    <color name="bulle_bot">#FFFFFF</color>
 </resources>

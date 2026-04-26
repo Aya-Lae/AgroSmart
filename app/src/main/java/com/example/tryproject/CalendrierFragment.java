@@ -1,64 +1,150 @@
 package com.example.tryproject;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.tryproject.data.AgricoDatabase;
+import com.example.tryproject.model.Activite;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CalendrierFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CalendrierFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CalendrierFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CalendrierFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CalendrierFragment newInstance(String param1, String param2) {
-        CalendrierFragment fragment = new CalendrierFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private RecyclerView recyclerActivites;
+    private EditText editCulture, editType, editDate, editNote;
+    private List<Activite> activites = new ArrayList<>();
+    private ActiviteAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendrier, container, false);
+        View view = inflater.inflate(R.layout.fragment_calendrier, container, false);
+
+        recyclerActivites = view.findViewById(R.id.recycler_activites);
+        editCulture = view.findViewById(R.id.edit_culture);
+        editType    = view.findViewById(R.id.edit_type);
+        editDate    = view.findViewById(R.id.edit_date);
+        editNote    = view.findViewById(R.id.edit_note);
+        Button btnAjouter = view.findViewById(R.id.btn_ajouter);
+
+        adapter = new ActiviteAdapter(activites, this::marquerFaite);
+        recyclerActivites.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerActivites.setAdapter(adapter);
+
+        chargerActivites();
+
+        btnAjouter.setOnClickListener(v -> ajouterActivite());
+
+        return view;
+    }
+
+    private void ajouterActivite() {
+        String culture = editCulture.getText().toString().trim();
+        String type    = editType.getText().toString().trim();
+        String date    = editDate.getText().toString().trim();
+        String note    = editNote.getText().toString().trim();
+
+        if (culture.isEmpty() || type.isEmpty() || date.isEmpty()) return;
+
+        new Thread(() -> {
+            Activite a = new Activite();
+            a.culture = culture;
+            a.type    = type;
+            a.date    = date;
+            a.note    = note;
+            a.faite   = false;
+
+            AgricoDatabase.getInstance(getContext()).activiteDao().ajouter(a);
+
+            requireActivity().runOnUiThread(() -> {
+                activites.clear();
+                editCulture.setText("");
+                editType.setText("");
+                editDate.setText("");
+                editNote.setText("");
+                chargerActivites();
+            });
+        }).start();
+    }
+
+    private void chargerActivites() {
+        new Thread(() -> {
+            List<Activite> liste = AgricoDatabase.getInstance(getContext())
+                    .activiteDao().getTout();
+            requireActivity().runOnUiThread(() -> {
+                activites.clear();
+                activites.addAll(liste);
+                adapter.notifyDataSetChanged();
+            });
+        }).start();
+    }
+
+    private void marquerFaite(Activite activite) {
+        new Thread(() -> {
+            activite.faite = !activite.faite;
+            AgricoDatabase.getInstance(getContext()).activiteDao().modifier(activite);
+            requireActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
+        }).start();
+    }
+
+    // Adapter
+    static class ActiviteAdapter extends RecyclerView.Adapter<ActiviteAdapter.ViewHolder> {
+
+        interface OnCheck { void onClick(Activite activite); }
+
+        private List<Activite> activites;
+        private OnCheck listener;
+
+        ActiviteAdapter(List<Activite> activites, OnCheck listener) {
+            this.activites = activites;
+            this.listener  = listener;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_activite, parent, false);
+            return new ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            Activite a = activites.get(position);
+            holder.titre.setText(a.type + " — " + a.culture);
+            holder.date.setText("📅 " + a.date);
+            holder.note.setText(a.note);
+            holder.check.setChecked(a.faite);
+            // texte barré si fait
+            holder.titre.setPaintFlags(a.faite
+                    ? holder.titre.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+                    : holder.titre.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+            );
+            holder.check.setOnClickListener(v -> listener.onClick(a));
+        }
+
+        @Override
+        public int getItemCount() { return activites.size(); }
+
+        static class ViewHolder extends RecyclerView.ViewHolder {
+            TextView titre, date, note;
+            CheckBox check;
+            ViewHolder(View v) {
+                super(v);
+                titre = v.findViewById(R.id.item_titre);
+                date  = v.findViewById(R.id.item_date);
+                note  = v.findViewById(R.id.item_note);
+                check = v.findViewById(R.id.check_faite);
+            }
+        }
     }
 }

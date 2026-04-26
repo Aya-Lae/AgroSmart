@@ -1,14 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BaseFragment">
+    android:orientation="vertical"
+    android:background="@color/fond_clair">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Header -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="@color/vert_principal"
+        android:padding="16dp"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:text="📚 Base de connaissances"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/blanc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="✅ Disponible hors ligne"
+            android:textSize="12sp"
+            android:textColor="#CCFFCC"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Liste -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_fiches"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"/>
+
+    <!-- Détail -->
+    <ScrollView
+        android:id="@+id/vue_detail"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/fond_clair">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Header détail -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/vert_principal"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/btn_retour"
+                    android:text="←"
+                    android:textColor="@color/blanc"
+                    android:backgroundTint="@color/vert_clair"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="12dp"/>
+
+                <TextView
+                    android:id="@+id/detail_titre"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/blanc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/detail_description"
+                android:textSize="14sp"
+                android:textColor="@color/texte_gris"
+                android:padding="16dp"
+                android:lineSpacingExtra="4dp"
+                android:background="@color/blanc"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!-- Sections infos -->
+            <include layout="@layout/section_detail" android:id="@+id/section1"/>
+            <include layout="@layout/section_detail" android:id="@+id/section2"/>
+            <include layout="@layout/section_detail" android:id="@+id/section3"/>
+            <include layout="@layout/section_detail" android:id="@+id/section4"/>
+            <include layout="@layout/section_detail" android:id="@+id/section5"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

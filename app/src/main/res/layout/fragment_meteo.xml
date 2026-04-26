@@ -1,126 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/fond_clair">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="vertical">
 
-        <!-- Champ ville + bouton -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
+            android:layout_height="220dp"
+            android:background="@color/vert_principal"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="20dp">
 
-            <EditText
-                android:id="@+id/edit_ville"
-                android:hint="Ville (ex: Settat)"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
 
-            <Button
-                android:id="@+id/btn_chercher"
-                android:text="Voir"
+                <EditText
+                    android:id="@+id/edit_ville"
+                    android:hint="Ville (ex: Settat)"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/btn_chercher"
+                    android:text="Voir"
+                    android:backgroundTint="@color/dore"
+                    android:textColor="@color/blanc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_temperature"
+                android:textSize="72sp"
+                android:textStyle="bold"
+                android:textColor="@color/blanc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txt_ville"
+                android:textSize="22sp"
+                android:textColor="@color/blanc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txt_description"
+                android:textSize="15sp"
+                android:textColor="@color/blanc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
-        <!-- Alerte (visible seulement si danger) -->
         <TextView
             android:id="@+id/txt_alerte"
             android:visibility="gone"
-            android:background="#FFEB3B"
-            android:padding="12dp"
+            android:background="@color/alerte_jaune"
+            android:padding="14dp"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp"
+            android:textColor="#F57F17"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <!-- Température principale -->
-        <TextView
-            android:id="@+id/txt_temperature"
-            android:textSize="64sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <!-- Ville + description -->
-        <TextView
-            android:id="@+id/txt_ville"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/txt_description"
-            android:textSize="16sp"
-            android:textAlignment="center"
-            android:textColor="#666666"
-            android:layout_marginBottom="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <!-- Détails : min/max, humidité, vent -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="24dp">
+            android:background="@color/blanc"
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:layout_margin="16dp">
 
-            <TextView
-                android:id="@+id/txt_minmax"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:text="🌡️"
+                    android:textSize="24sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/txt_minmax"
+                    android:textSize="13sp"
+                    android:textColor="@color/texte_gris"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="Min / Max"
+                    android:textSize="11sp"
+                    android:textColor="@color/texte_gris"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txt_humidite"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:text="💧"
+                    android:textSize="24sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/txt_humidite"
+                    android:textSize="13sp"
+                    android:textColor="@color/texte_gris"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="Humidité"
+                    android:textSize="11sp"
+                    android:textColor="@color/texte_gris"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txt_vent"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:text="💨"
+                    android:textSize="24sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/txt_vent"
+                    android:textSize="13sp"
+                    android:textColor="@color/texte_gris"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="Vent"
+                    android:textSize="11sp"
+                    android:textColor="@color/texte_gris"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
         </LinearLayout>
 
-        <!-- Conseil agricole du jour -->
-        <TextView
-            android:text="Conseil agricole du jour"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/txt_conseil"
-            android:background="#E8F5E9"
-            android:padding="12dp"
-            android:textSize="14sp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/blanc"
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp">
 
-        <!-- Message d'erreur -->
+            <TextView
+                android:text="🌾 Conseil agricole du jour"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/vert_principal"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txt_conseil"
+                android:textSize="14sp"
+                android:textColor="@color/texte_gris"
+                android:lineSpacingExtra="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/txt_erreur"
             android:visibility="gone"
-            android:textColor="#F44336"
-            android:textAlignment="center"
-            android:layout_marginTop="20dp"
+            android:textColor="@color/alerte_rouge"
+            android:gravity="center"
+            android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
