@@ -1,5 +1,7 @@
 package com.example.tryproject;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,58 +19,53 @@ public class ProfilFragment extends Fragment {
     TextView txtConfirmation;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profil, container, false);
 
-        editNom = view.findViewById(R.id.edit_nom);
-        editRegion = view.findViewById(R.id.edit_region);
-        editCulture = view.findViewById(R.id.edit_culture);
-        txtConfirmation = view.findViewById(R.id.txt_confirmation);
-        Button btnSauvegarder = view.findViewById(R.id.btn_sauvegarder);
+        editNom          = view.findViewById(R.id.edit_nom);
+        editRegion       = view.findViewById(R.id.edit_region);
+        editCulture      = view.findViewById(R.id.edit_culture);
+        txtConfirmation  = view.findViewById(R.id.txt_confirmation);
+        Button btnSauvegarder   = view.findViewById(R.id.btn_sauvegarder);
+        Button btnDeconnexion   = view.findViewById(R.id.btn_deconnexion);
 
-        // Charger le profil existant au démarrage
-        chargerProfil();
+        // Charger les infos depuis SharedPreferences
+        SharedPreferences prefs = requireActivity()
+                .getSharedPreferences(AuthActivity.PREFS, 0);
+        editNom.setText(prefs.getString(AuthActivity.KEY_NOM, ""));
+        editRegion.setText(prefs.getString(AuthActivity.KEY_REGION, ""));
+        editCulture.setText(prefs.getString(AuthActivity.KEY_CULTURE, ""));
 
-        // Quand on clique sur Sauvegarder
         btnSauvegarder.setOnClickListener(v -> sauvegarderProfil());
+
+        btnDeconnexion.setOnClickListener(v -> {
+            // Effacer la session
+            requireActivity()
+                    .getSharedPreferences(AuthActivity.PREFS, 0)
+                    .edit()
+                    .clear()
+                    .apply();
+
+            // Retourner à l'écran d'inscription
+            Intent intent = new Intent(getActivity(), AuthActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
 
         return view;
     }
 
     private void sauvegarderProfil() {
-        // Room interdit les opérations réseau/base sur le thread principal
-        // donc on utilise un thread séparé
-        new Thread(() -> {
-            Agriculteur agriculteur = new Agriculteur();
-            agriculteur.nom = editNom.getText().toString();
-            agriculteur.region = editRegion.getText().toString();
-            agriculteur.culture = editCulture.getText().toString();
-            agriculteur.langue = "fr";
+        // Mettre à jour SharedPreferences
+        requireActivity()
+                .getSharedPreferences(AuthActivity.PREFS, 0)
+                .edit()
+                .putString(AuthActivity.KEY_NOM, editNom.getText().toString())
+                .putString(AuthActivity.KEY_REGION, editRegion.getText().toString())
+                .putString(AuthActivity.KEY_CULTURE, editCulture.getText().toString())
+                .apply();
 
-            AgricoDatabase.getInstance(getContext())
-                    .agriculteurDao()
-                    .sauvegarder(agriculteur);
-
-            // Revenir sur le thread principal pour mettre à jour l'écran
-            requireActivity().runOnUiThread(() ->
-                    txtConfirmation.setText("Profil sauvegardé !")
-            );
-        }).start();
-    }
-
-    private void chargerProfil() {
-        new Thread(() -> {
-            Agriculteur agriculteur = AgricoDatabase.getInstance(getContext())
-                    .agriculteurDao()
-                    .charger();
-
-            if (agriculteur != null) {
-                requireActivity().runOnUiThread(() -> {
-                    editNom.setText(agriculteur.nom);
-                    editRegion.setText(agriculteur.region);
-                    editCulture.setText(agriculteur.culture);
-                });
-            }
-        }).start();
+        txtConfirmation.setText("✅ Profil mis à jour !");
     }
 }

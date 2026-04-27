@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Fond dégradé -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_auth"/>
+
+    <!-- Décorations plantes (cercles flous) -->
+    <View
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-60dp"
+        android:layout_marginEnd="-60dp"
+        android:background="@drawable/cercle_vert"
+        android:alpha="0.15"/>
+
+    <View
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="top|start"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="-50dp"
+        android:background="@drawable/cercle_vert"
+        android:alpha="0.10"/>
+
+    <!-- Contenu principal -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Logo + titre -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingTop="40dp"
+                android:paddingBottom="32dp">
+
+                <!-- Logo cercle -->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center">
+
+                    <View
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/cercle_vert"
+                        android:alpha="0.3"/>
+
+                    <TextView
+                        android:text="🌿"
+                        android:textSize="44sp"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
+
+                <TextView
+                    android:text="AgroSmart MA"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/blanc"
+                    android:layout_marginTop="12dp"
+                    android:letterSpacing="0.05"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="Votre assistant agricole intelligent"
+                    android:textSize="13sp"
+                    android:textColor="#CCFFCC"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!-- Carte formulaire -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="24dp"
+                android:elevation="8dp">
+
+                <!-- Tabs Connexion / Inscription -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:id="@+id/tab_connexion"
+                        android:text="✓  Connexion"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blanc"
+                        android:gravity="center"
+                        android:background="@drawable/btn_green"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"/>
+
+                    <TextView
+                        android:id="@+id/tab_inscription"
+                        android:text="Inscription"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/vert_principal"
+                        android:gravity="center"
+                        android:background="@drawable/btn_outline"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"/>
+
+                </LinearLayout>
+
+                <!-- Champ Nom (inscription seulement) -->
+                <LinearLayout
+                    android:id="@+id/champ_nom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:text="Nom complet"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/texte_gris"
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/edit_nom"
+                        android:hint="Votre nom"
+                        android:background="@drawable/input_background"
+                        android:padding="14dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Champ Région (inscription seulement) -->
+                <LinearLayout
+                    android:id="@+id/champ_region"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:text="Région"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/texte_gris"
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/edit_region"
+                        android:hint="Ex: Settat, Marrakech..."
+                        android:background="@drawable/input_background"
+                        android:padding="14dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Champ Culture (inscription seulement) -->
+                <LinearLayout
+                    android:id="@+id/champ_culture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:text="Culture principale"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/texte_gris"
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/edit_culture"
+                        android:hint="Ex: Blé, Olive, Tomate..."
+                        android:background="@drawable/input_background"
+                        android:padding="14dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Email -->
+                <TextView
+                    android:text="Email *"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/texte_gris"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/input_background"
+                    android:padding="14dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:text="✉"
+                        android:textSize="18sp"
+                        android:textColor="@color/vert_principal"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/edit_email"
+                        android:hint="votre@email.com"
+                        android:inputType="textEmailAddress"
+                        android:background="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Mot de passe -->
+                <TextView
+                    android:text="Mot de passe *"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/texte_gris"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/input_background"
+                    android:padding="14dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:text="🔒"
+                        android:textSize="18sp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/edit_password"
+                        android:hint="Mot de passe"
+                        android:inputType="textPassword"
+                        android:background="@null"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/btn_voir_mdp"
+                        android:text="👁"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- Bouton principal -->
+                <TextView
+                    android:id="@+id/btn_action"
+                    android:text="Se connecter"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/blanc"
+                    android:gravity="center"
+                    android:background="@drawable/btn_green"
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!-- Message erreur -->
+                <TextView
+                    android:id="@+id/txt_erreur"
+                    android:visibility="gone"
+                    android:textColor="@color/alerte_rouge"
+                    android:gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!-- Footer -->
+            <TextView
+                android:text="🌱 AgroSmart MA — Agriculture intelligente"
+                android:textSize="11sp"
+                android:textColor="#AAFFAA"
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
