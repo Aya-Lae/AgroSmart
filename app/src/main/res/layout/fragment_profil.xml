@@ -54,6 +54,7 @@
             <EditText
                 android:id="@+id/edit_nom"
                 android:hint="Votre nom"
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"/>
@@ -67,6 +68,7 @@
             <EditText
                 android:id="@+id/edit_region"
                 android:hint="Ex: Settat, Marrakech..."
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"/>
@@ -80,13 +82,14 @@
             <EditText
                 android:id="@+id/edit_culture"
                 android:hint="Ex: Blé, Olive, Tomate..."
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"/>
 
             <Button
                 android:id="@+id/btn_sauvegarder"
-                android:text="💾 Sauvegarder"
+                android:text="Modifier"
                 android:backgroundTint="@color/vert_principal"
                 android:textColor="@color/blanc"
                 android:layout_width="match_parent"

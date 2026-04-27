@@ -236,7 +236,7 @@
                     android:layout_marginBottom="12dp">
 
                     <TextView
-                        android:text="✉"
+                        android:text=""
                         android:textSize="18sp"
                         android:textColor="@color/vert_principal"
                         android:layout_marginEnd="10dp"
@@ -248,6 +248,7 @@
                         android:hint="votre@email.com"
                         android:inputType="textEmailAddress"
                         android:background="@null"
+                        android:textColor="@android:color/black"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -272,7 +273,7 @@
                     android:layout_marginBottom="24dp">
 
                     <TextView
-                        android:text="🔒"
+                        android:text=""
                         android:textSize="18sp"
                         android:layout_marginEnd="10dp"
                         android:layout_width="wrap_content"
@@ -283,6 +284,7 @@
                         android:hint="Mot de passe"
                         android:inputType="textPassword"
                         android:background="@null"
+                        android:textColor="@android:color/black"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>

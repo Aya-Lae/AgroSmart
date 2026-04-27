@@ -1,8 +1,17 @@
 package com.example.tryproject.data;
 
 import com.example.tryproject.model.Meteo;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MeteoRepository {
+
+    // Remplace par ta clé OpenWeather
+    private static final String API_KEY = "a2e2a080a3c4792893d7fc2ee1101bec";
+    private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 
     public interface MeteoCallback {
         void onMeteo(Meteo meteo);
@@ -12,51 +21,47 @@ public class MeteoRepository {
     public void getMeteo(String ville, MeteoCallback callback) {
         new Thread(() -> {
             try {
-                Thread.sleep(800); // délai simulé
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                // Construire l'URL de la requête
+                String urlString = BASE_URL
+                        + "?q=" + ville
+                        + "&appid=" + API_KEY
+                        + "&units=metric"      // température en Celsius
+                        + "&lang=fr";          // description en français
+
+                URL url = new URL(urlString);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setConnectTimeout(5000);
+
+                // Lire la réponse
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) sb.append(line);
+                reader.close();
+
+                // Parser le JSON reçu
+                JSONObject json = new JSONObject(sb.toString());
+                JSONObject main = json.getJSONObject("main");
+                JSONObject wind = json.getJSONObject("wind");
+                JSONObject weather = json.getJSONArray("weather").getJSONObject(0);
+
+                Meteo meteo = new Meteo(
+                        json.getString("name"),
+                        main.getDouble("temp"),
+                        main.getDouble("temp_min"),
+                        main.getDouble("temp_max"),
+                        weather.getString("description"),
+                        main.getInt("humidity"),
+                        wind.getDouble("speed") * 3.6 // m/s → km/h
+                );
+
+                callback.onMeteo(meteo);
+
+            } catch (Exception e) {
+                callback.onErreur("Impossible de récupérer la météo : " + e.getMessage());
             }
-
-            // Données simulées selon la ville
-            Meteo meteo;
-            String villeLower = ville.toLowerCase().trim();
-
-            if (villeLower.contains("settat")) {
-                meteo = new Meteo("Settat", 28, 18, 32,
-                        "partiellement nuageux", 55, 15);
-
-            } else if (villeLower.contains("casablanca") || villeLower.contains("casa")) {
-                meteo = new Meteo("Casablanca", 22, 17, 25,
-                        "ciel dégagé", 70, 20);
-
-            } else if (villeLower.contains("marrakech")) {
-                meteo = new Meteo("Marrakech", 36, 24, 40,
-                        "ensoleillé", 30, 10);
-
-            } else if (villeLower.contains("rabat")) {
-                meteo = new Meteo("Rabat", 24, 18, 27,
-                        "légèrement nuageux", 65, 18);
-
-            } else if (villeLower.contains("fes") || villeLower.contains("fès")) {
-                meteo = new Meteo("Fès", 30, 20, 34,
-                        "ensoleillé", 40, 8);
-
-            } else if (villeLower.contains("agadir")) {
-                meteo = new Meteo("Agadir", 26, 20, 29,
-                        "ciel dégagé", 60, 25);
-
-            } else if (villeLower.contains("meknes") || villeLower.contains("meknès")) {
-                meteo = new Meteo("Meknès", 29, 19, 33,
-                        "partiellement nuageux", 45, 12);
-
-            } else {
-                // Ville non reconnue - données génériques
-                meteo = new Meteo(ville, 25, 17, 30,
-                        "ensoleillé", 50, 14);
-            }
-
-            callback.onMeteo(meteo);
-
         }).start();
     }
 }
