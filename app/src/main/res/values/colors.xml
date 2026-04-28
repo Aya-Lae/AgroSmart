@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="vert_principal">#2E7D32</color>
-    <color name="vert_clair">#4CAF50</color>
-    <color name="vert_tres_fonce">#1B5E20</color>
-    <color name="dore">#F9A825</color>
-    <color name="fond_clair">#F5F5F5</color>
+    <color name="vert_principal">#1B4332</color>
+    <color name="vert_clair">#2D6A4F</color>
+    <color name="vert_tres_fonce">#081C15</color>
+    <color name="vert_accent">#52B788</color>
+    <color name="dore">#B7935A</color>
+    <color name="fond_clair">#F8F6F2</color>
     <color name="blanc">#FFFFFF</color>
     <color name="texte_gris">#757575</color>
-    <color name="alerte_rouge">#F44336</color>
+    <color name="alerte_rouge">#E63946</color>
     <color name="alerte_jaune">#FFF9C4</color>
-    <color name="bulle_user">#C8E6C9</color>
+    <color name="bulle_user">#2D6A4F</color>
     <color name="bulle_bot">#FFFFFF</color>
+    <color name="carte_bg">#F0EDE8</color>
 </resources>

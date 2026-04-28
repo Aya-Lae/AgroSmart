@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="accueil">الرئيسية</string>
     <!-- App -->
     <string name="app_name">أغروسمارت MA</string>
     <string name="slogan">مساعدك الزراعي الذكي</string>

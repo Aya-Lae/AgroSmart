@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fond_clair">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header salutation -->
+        <!-- Header salutation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/vert_principal"
+            android:padding="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_salutation"
+                    android:text="Bonjour 👋"
+                    android:textSize="14sp"
+                    android:textColor="#AAFFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txt_nom_dashboard"
+                    android:text="Agriculteur"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/blanc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txt_date_dashboard"
+                    android:textSize="13sp"
+                    android:textColor="#CCFFFFFF"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <!-- Bouton notifications -->
+            <LinearLayout
+                android:id="@+id/btn_toggle_notifs"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/cercle_notif_actif"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:id="@+id/icone_notif"
+                    android:text="🔔"
+                    android:textSize="22sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txt_notif_statut"
+                    android:text="ON"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/blanc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Carte météo rapide -->
+        <LinearLayout
+            android:id="@+id/carte_meteo_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/blanc"
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:layout_margin="16dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/dash_icone_meteo"
+                android:textSize="40sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dash_ville_meteo"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#212121"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/dash_desc_meteo"
+                    android:textSize="13sp"
+                    android:textColor="@color/texte_gris"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/dash_conseil_meteo"
+                    android:textSize="12sp"
+                    android:textColor="@color/vert_accent"
+                    android:textStyle="italic"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dash_temp_meteo"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/vert_principal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <!-- Titre activités -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:text="📅 Activités du jour"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#212121"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/dash_nb_activites"
+                android:textSize="13sp"
+                android:textColor="@color/vert_accent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- Liste activités du jour -->
+        <LinearLayout
+            android:id="@+id/layout_activites_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <!-- Raccourcis -->
+        <TextView
+            android:text="Accès rapide"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="24dp">
+
+            <!-- Chatbot -->
+            <LinearLayout
+                android:id="@+id/raccourci_chatbot"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="90dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/btn_vert_arrondi"
+                android:layout_marginEnd="8dp"
+                android:clickable="true"
+                android:focusable="true">
+                <TextView android:text="🤖" android:textSize="28sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView android:text="Chatbot" android:textSize="12sp"
+                    android:textColor="@color/blanc" android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!-- Base -->
+            <LinearLayout
+                android:id="@+id/raccourci_base"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="90dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/card_background"
+                android:layout_marginEnd="8dp"
+                android:elevation="3dp"
+                android:clickable="true"
+                android:focusable="true">
+                <TextView android:text="📚" android:textSize="28sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView android:text="Base" android:textSize="12sp"
+                    android:textColor="@color/vert_principal" android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!-- Calendrier -->
+            <LinearLayout
+                android:id="@+id/raccourci_calendrier"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="90dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/card_background"
+                android:elevation="3dp"
+                android:clickable="true"
+                android:focusable="true">
+                <TextView android:text="📅" android:textSize="28sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView android:text="Calendrier" android:textSize="12sp"
+                    android:textColor="@color/vert_principal" android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

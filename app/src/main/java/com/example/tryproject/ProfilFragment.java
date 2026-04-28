@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,9 +35,12 @@ public class ProfilFragment extends Fragment {
         txtEmailHeader   = view.findViewById(R.id.txt_email_header);
         txtEmailDetail   = view.findViewById(R.id.txt_email_detail);
         txtStatutChatbot = view.findViewById(R.id.txt_statut_chatbot);
-        Button btnSauvegarder = view.findViewById(R.id.btn_sauvegarder);
-        Button btnDeconnexion = view.findViewById(R.id.btn_deconnexion);
-        LinearLayout carteActiver = view.findViewById(R.id.carte_activer);
+
+        Button btnSauvegarder   = view.findViewById(R.id.btn_sauvegarder);
+        LinearLayout btnDeconnexion  = view.findViewById(R.id.btn_deconnexion);
+        LinearLayout carteActiver    = view.findViewById(R.id.btn_payer_activer);
+        LinearLayout btnHistorique   = view.findViewById(R.id.btn_historique);
+        LinearLayout btnAide         = view.findViewById(R.id.btn_aide);
 
         // Charger les données
         SharedPreferences prefs = requireActivity()
@@ -50,15 +54,17 @@ public class ProfilFragment extends Fragment {
         editRegion.setText(region);
         editCulture.setText(culture);
 
-        // Firebase user info
+        // Firebase user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String email = user.getEmail();
-            txtEmailHeader.setText(email);
-            txtEmailDetail.setText(email);
+            if (email != null) {
+                txtEmailHeader.setText(email);
+                txtEmailDetail.setText(email);
+            }
         }
 
-        // Avatar : première lettre du nom
+        // Avatar
         if (!nom.isEmpty()) {
             txtAvatar.setText(String.valueOf(nom.charAt(0)).toUpperCase());
             txtNomHeader.setText(nom);
@@ -66,22 +72,31 @@ public class ProfilFragment extends Fragment {
 
         // Statut chatbot
         if (claudeActif) {
-            txtStatutChatbot.setText("Claude AI ✅");
-            txtStatutChatbot.setTextColor(
-                    requireContext().getColor(R.color.vert_principal));
-        } else {
-            txtStatutChatbot.setText("Simulé");
+            txtStatutChatbot.setText("Claude AI activé ✅");
         }
 
-        // Bouton activer Claude
+        // Activer Claude
         carteActiver.setOnClickListener(v -> {
-            // Ouvrir dialog paiement
             PaiementDialog dialog = new PaiementDialog();
             dialog.show(getParentFragmentManager(), "paiement");
         });
 
+        // Historique (à implémenter plus tard)
+        btnHistorique.setOnClickListener(v ->
+                Toast.makeText(getContext(),
+                        "Historique des paiements — bientôt disponible",
+                        Toast.LENGTH_SHORT).show());
+
+        // Aide
+        btnAide.setOnClickListener(v ->
+                Toast.makeText(getContext(),
+                        "Support : agrosmart@gmail.com",
+                        Toast.LENGTH_SHORT).show());
+
+        // Sauvegarder
         btnSauvegarder.setOnClickListener(v -> sauvegarderProfil());
 
+        // Déconnexion
         btnDeconnexion.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getActivity(), AuthActivity.class);
@@ -105,12 +120,10 @@ public class ProfilFragment extends Fragment {
                         editCulture.getText().toString().trim())
                 .apply();
 
-        // Mettre à jour avatar
         if (!nom.isEmpty()) {
             txtAvatar.setText(String.valueOf(nom.charAt(0)).toUpperCase());
             txtNomHeader.setText(nom);
         }
-
         txtConfirmation.setText("✅ Profil mis à jour !");
     }
 }

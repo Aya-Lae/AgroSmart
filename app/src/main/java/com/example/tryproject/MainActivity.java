@@ -11,6 +11,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Locale;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import com.example.tryproject.notifications.NotificationScheduler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +32,19 @@ public class MainActivity extends AppCompatActivity {
         appliquerLangue(langue);
 
         setContentView(R.layout.activity_main);
+        // Demander permission notifications (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                        200);
+            }
+        }
+
+// Programmer la notification météo quotidienne
+        NotificationScheduler.programmerNotificationQuotidienne(this);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);

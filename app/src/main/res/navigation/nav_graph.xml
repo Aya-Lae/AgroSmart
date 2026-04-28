@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/meteoFragment">
+    app:startDestination="@id/dashboardFragment">
 
     <fragment
         android:id="@+id/chatbotFragment"
@@ -13,6 +13,10 @@
         android:id="@+id/calendrierFragment"
         android:name="com.example.tryproject.CalendrierFragment"
         android:label="Calendrier" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.tryproject.DashboardFragment"
+        android:label="Accueil"/>
 
     <fragment
         android:id="@+id/meteoFragment"

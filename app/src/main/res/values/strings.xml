@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="accueil">Accueil</string>
+
     <!-- App -->
     <string name="app_name">AgroSmart MA</string>
     <string name="slogan">Votre assistant agricole intelligent</string>
@@ -59,9 +61,9 @@
 
     <!-- Profil -->
     <string name="mon_profil">Mon Profil</string>
-    <string name="sauvegarder">💾 Sauvegarder</string>
+    <string name="sauvegarder"> Sauvegarder</string>
     <string name="profil_mis_a_jour">✅ Profil mis à jour !</string>
-    <string name="se_deconnecter">🚪 Se déconnecter</string>
+    <string name="se_deconnecter">Se déconnecter</string>
 
     <!-- Langue -->
     <string name="langue_btn">FR 🌐</string>
