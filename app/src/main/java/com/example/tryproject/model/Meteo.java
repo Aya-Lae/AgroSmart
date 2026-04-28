@@ -1,6 +1,8 @@
 package com.example.tryproject.model;
 
 public class Meteo {
+    public String sunset = "";
+    public String iconeCode = "";
     public String ville;
     public double temperature;
     public double temperatureMin;

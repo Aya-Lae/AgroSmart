@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "685667624824",
+    "project_id": "agrosmart-d41ce",
+    "storage_bucket": "agrosmart-d41ce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685667624824:android:9e6022986087eb7ed74a8d",
+        "android_client_info": {
+          "package_name": "com.example.tryproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZA7Z342oUkZeNFmrh4cyYTrt4UNEjbC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

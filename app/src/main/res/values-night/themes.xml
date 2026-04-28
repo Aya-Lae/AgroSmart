@@ -1,7 +1,29 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Tryproject" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Tryproject" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/vert_principal</item>
+        <item name="colorPrimaryVariant">@color/vert_tres_fonce</item>
+        <item name="colorOnPrimary">@color/blanc</item>
+        <item name="colorSecondary">@color/dore</item>
+        <item name="colorOnSecondary">@color/blanc</item>
+        <item name="android:windowBackground">@color/blanc</item>
+        <item name="android:textColor">#212121</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/vert_principal</item>
+        <item name="materialButtonStyle">@style/BoutonAgrico</item>
+        <item name="bottomNavigationStyle">@style/NavBarAgrico</item>
+    </style>
+
+    <style name="BoutonAgrico" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/vert_principal</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:textColor">@color/blanc</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NavBarAgrico" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/nav_couleurs</item>
+        <item name="itemTextColor">@color/nav_couleurs</item>
+        <item name="backgroundTint">@color/blanc</item>
     </style>
 </resources>

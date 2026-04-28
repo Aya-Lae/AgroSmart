@@ -1,4 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App -->
     <string name="app_name">AgroSmart MA</string>
+    <string name="slogan">Votre assistant agricole intelligent</string>
+
+    <!-- Navigation -->
+    <string name="meteo">Météo</string>
+    <string name="chatbot">Chatbot</string>
+    <string name="calendrier">Calendrier</string>
+    <string name="base">Base</string>
+    <string name="profil">Profil</string>
+
+    <!-- Auth -->
+    <string name="connexion">Connexion</string>
+    <string name="inscription">Inscription</string>
+    <string name="email">Email *</string>
+    <string name="mot_de_passe">Mot de passe *</string>
+    <string name="nom_complet">Nom complet</string>
+    <string name="votre_nom">Votre nom</string>
+    <string name="region">Région</string>
+    <string name="region_hint">Ex: Settat, Marrakech...</string>
+    <string name="culture_principale">Culture principale</string>
+    <string name="culture_hint">Ex: Blé, Olive, Tomate...</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="creer_compte">Créer mon compte</string>
+    <string name="email_hint">votre@email.com</string>
+    <string name="mdp_hint">Mot de passe</string>
+
+    <!-- Météo -->
+    <string name="humidite">Humidité</string>
+    <string name="vent">Vent</string>
+    <string name="coucher">Coucher</string>
+    <string name="conseil_agricole">🌾 Conseil agricole</string>
+    <string name="next_6_days">Prochains 6 jours</string>
+    <string name="chercher_ville">Chercher une ville...</string>
+    <string name="ok">OK</string>
+    <string name="alerte">⚠️ Alerte</string>
+
+    <!-- Chatbot -->
+    <string name="poser_question">Posez votre question...</string>
+    <string name="envoyer">Envoyer</string>
+    <string name="agrosmart_ecrit">AgroSmart écrit...</string>
+    <string name="bienvenue_chatbot">Bonjour ! Je suis AgroSmart. Comment puis-je vous aider aujourd\'hui ?</string>
+
+    <!-- Calendrier -->
+    <string name="titre_calendrier">📅 Calendrier agricole</string>
+    <string name="sous_titre_calendrier">Planifiez vos activités de la saison</string>
+    <string name="nouvelle_activite">➕ Nouvelle activité</string>
+    <string name="culture_label">Culture (ex: Blé, Tomate...)</string>
+    <string name="type_label">Type (Semis, Irrigation, Récolte...)</string>
+    <string name="date_label">Date (ex: 15/05/2026)</string>
+    <string name="note_label">Note (optionnel)</string>
+    <string name="btn_ajouter">+ Ajouter</string>
+
+    <!-- Base de connaissances -->
+    <string name="titre_base">📚 Base de connaissances</string>
+    <string name="hors_ligne">✅ Disponible hors ligne</string>
+
+    <!-- Profil -->
+    <string name="mon_profil">Mon Profil</string>
+    <string name="sauvegarder">💾 Sauvegarder</string>
+    <string name="profil_mis_a_jour">✅ Profil mis à jour !</string>
+    <string name="se_deconnecter">🚪 Se déconnecter</string>
+
+    <!-- Langue -->
+    <string name="langue_btn">FR 🌐</string>
 </resources>

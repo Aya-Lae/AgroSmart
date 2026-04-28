@@ -7,18 +7,18 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthActivity extends AppCompatActivity {
 
-    public static final String PREFS      = "agrico_prefs";
-    public static final String KEY_CONNECTE = "est_connecte";
-    public static final String KEY_NOM    = "nom";
-    public static final String KEY_REGION = "region";
+    public static final String PREFS       = "agrico_prefs";
+    public static final String KEY_NOM     = "nom";
+    public static final String KEY_REGION  = "region";
     public static final String KEY_CULTURE = "culture";
-    public static final String KEY_EMAIL  = "email";
-    public static final String KEY_PASSWORD = "password";
 
     private boolean modeConnexion = true;
     private boolean mdpVisible    = false;
@@ -26,10 +26,22 @@ public class AuthActivity extends AppCompatActivity {
     private TextView tabConnexion, tabInscription, btnAction, txtErreur, btnVoirMdp;
     private EditText editEmail, editPassword, editNom, editRegion, editCulture;
     private LinearLayout champNom, champRegion, champCulture;
+    private ProgressBar progressBar;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Si déjà connecté → aller directement à l'app
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            allerVersApp();
+            return;
+        }
+
         setContentView(R.layout.activity_auth);
 
         tabConnexion   = findViewById(R.id.tab_connexion);
@@ -45,12 +57,11 @@ public class AuthActivity extends AppCompatActivity {
         champNom       = findViewById(R.id.champ_nom);
         champRegion    = findViewById(R.id.champ_region);
         champCulture   = findViewById(R.id.champ_culture);
+        progressBar    = findViewById(R.id.progress_bar);
 
-        // Switch tabs
         tabConnexion.setOnClickListener(v -> switchMode(true));
         tabInscription.setOnClickListener(v -> switchMode(false));
 
-        // Voir/cacher mot de passe
         btnVoirMdp.setOnClickListener(v -> {
             mdpVisible = !mdpVisible;
             editPassword.setInputType(mdpVisible
@@ -100,21 +111,17 @@ public class AuthActivity extends AppCompatActivity {
             return;
         }
 
-        SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
-        String emailSauvegarde  = prefs.getString(KEY_EMAIL, "");
-        String mdpSauvegarde    = prefs.getString(KEY_PASSWORD, "");
+        afficherChargement(true);
 
-        if (!email.equals(emailSauvegarde)) {
-            showErreur("Email introuvable. Créez un compte d'abord.");
-            return;
-        }
-        if (!password.equals(mdpSauvegarde)) {
-            showErreur("Mot de passe incorrect.");
-            return;
-        }
-
-        prefs.edit().putBoolean(KEY_CONNECTE, true).apply();
-        allerVersApp();
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(result -> {
+                    afficherChargement(false);
+                    allerVersApp();
+                })
+                .addOnFailureListener(e -> {
+                    afficherChargement(false);
+                    showErreur("Email ou mot de passe incorrect.");
+                });
     }
 
     private void sInscrire() {
@@ -140,16 +147,33 @@ public class AuthActivity extends AppCompatActivity {
             return;
         }
 
-        getSharedPreferences(PREFS, MODE_PRIVATE).edit()
-                .putBoolean(KEY_CONNECTE, true)
-                .putString(KEY_NOM, nom)
-                .putString(KEY_REGION, region)
-                .putString(KEY_CULTURE, culture)
-                .putString(KEY_EMAIL, email)
-                .putString(KEY_PASSWORD, password)
-                .apply();
+        afficherChargement(true);
 
-        allerVersApp();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(result -> {
+                    // Sauvegarder les infos du profil localement
+                    getSharedPreferences(PREFS, MODE_PRIVATE).edit()
+                            .putString(KEY_NOM, nom)
+                            .putString(KEY_REGION, region)
+                            .putString(KEY_CULTURE, culture)
+                            .apply();
+
+                    afficherChargement(false);
+                    allerVersApp();
+                })
+                .addOnFailureListener(e -> {
+                    afficherChargement(false);
+                    String msg = e.getMessage() != null
+                            && e.getMessage().contains("already in use")
+                            ? "Cet email est déjà utilisé. Connectez-vous."
+                            : "Erreur : " + e.getMessage();
+                    showErreur(msg);
+                });
+    }
+
+    private void afficherChargement(boolean loading) {
+        progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
+        btnAction.setVisibility(loading ? View.GONE : View.VISIBLE);
     }
 
     private void showErreur(String msg) {

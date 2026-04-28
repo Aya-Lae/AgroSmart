@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="📚 Base de connaissances"
+            android:text="@string/titre_base"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/blanc"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:text="✅ Disponible hors ligne"
+            android:text="@string/hors_ligne"
             android:textSize="12sp"
             android:textColor="#CCFFCC"
             android:layout_marginTop="4dp"

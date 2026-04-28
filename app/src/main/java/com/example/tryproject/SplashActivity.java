@@ -1,10 +1,11 @@
 package com.example.tryproject;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -13,17 +14,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Après 1.5 secondes, décider où aller
         new Handler().postDelayed(() -> {
-            SharedPreferences prefs = getSharedPreferences(
-                    AuthActivity.PREFS, MODE_PRIVATE);
-            boolean estConnecte = prefs.getBoolean(AuthActivity.KEY_CONNECTE, false);
-
-            if (estConnecte) {
-                // Déjà inscrit → aller directement à l'app
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                // Déjà connecté → app directement
                 startActivity(new Intent(this, MainActivity.class));
             } else {
-                // Première fois → aller à l'inscription
+                // Pas connecté → authentification
                 startActivity(new Intent(this, AuthActivity.class));
             }
             finish();

@@ -106,7 +106,7 @@
 
                     <TextView
                         android:id="@+id/tab_connexion"
-                        android:text="✓  Connexion"
+                        android:text="@string/connexion"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="@color/blanc"
@@ -121,7 +121,7 @@
 
                     <TextView
                         android:id="@+id/tab_inscription"
-                        android:text="Inscription"
+                        android:text="@string/inscription"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="@color/vert_principal"
@@ -331,6 +331,12 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>

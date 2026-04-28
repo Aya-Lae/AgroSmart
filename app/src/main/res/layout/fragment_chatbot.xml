@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Liste des messages -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_messages"
         android:layout_width="match_parent"
@@ -13,10 +12,9 @@
         android:padding="8dp"
         android:clipToPadding="false"/>
 
-    <!-- Indicateur "en train d'écrire..." -->
     <TextView
         android:id="@+id/txt_loading"
-        android:text="AgroSmart écrit..."
+        android:text="@string/agrosmart_ecrit"
         android:textColor="#888888"
         android:visibility="gone"
         android:paddingStart="16dp"
@@ -24,17 +22,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <!-- Zone de saisie -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:background="@color/blanc"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/btn_photo"
+            android:text="📷"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"/>
 
         <EditText
             android:id="@+id/edit_message"
-            android:hint="Posez votre question..."
-            android:textColor="@android:color/black"
+            android:hint="@string/poser_question"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -42,7 +49,9 @@
 
         <Button
             android:id="@+id/btn_envoyer"
-            android:text="Envoyer"
+            android:text="@string/envoyer"
+            android:backgroundTint="@color/vert_principal"
+            android:textColor="@color/blanc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

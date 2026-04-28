@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="📅 Calendrier agricole"
+            android:text="@string/titre_calendrier"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/blanc"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:text="Planifiez vos activités de la saison"
+            android:text="@string/sous_titre_calendrier"
             android:textSize="12sp"
             android:textColor="#CCFFCC"
             android:layout_marginTop="4dp"
@@ -41,68 +41,64 @@
         android:layout_marginBottom="8dp">
 
         <TextView
-            android:text="➕ Nouvelle activité"
+            android:text="@string/nouvelle_activite"
             android:textStyle="bold"
             android:textColor="@color/vert_principal"
             android:textSize="15sp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/edit_culture"
+            android:hint="@string/culture_label"
+            android:textColor="#212121"
+            android:textColorHint="#9E9E9E"
+            android:backgroundTint="@color/vert_clair"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="8dp"
+            android:padding="10dp"/>
 
-            <EditText
-                android:id="@+id/edit_culture"
-                android:hint="Culture"
-                android:textColor="@android:color/black"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"/>
-
-            <EditText
-                android:id="@+id/edit_type"
-                android:hint="Type (Semis...)"
-                android:textColor="@android:color/black"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/edit_type"
+            android:hint="@string/type_label"
+            android:textColor="#212121"
+            android:textColorHint="#9E9E9E"
+            android:backgroundTint="@color/vert_clair"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginBottom="8dp"
+            android:padding="10dp"/>
 
-            <EditText
-                android:id="@+id/edit_date"
-                android:hint="Date (15/05/2026)"
-                android:textColor="@android:color/black"
-                android:inputType="datetime"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"/>
+        <EditText
+            android:id="@+id/edit_date"
+            android:hint="@string/date_label"
+            android:textColor="#212121"
+            android:textColorHint="#9E9E9E"
+            android:backgroundTint="@color/vert_clair"
+            android:inputType="datetime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:padding="10dp"/>
 
-            <EditText
-                android:id="@+id/edit_note"
-                android:hint="Note (optionnel)"
-                android:textColor="@android:color/black"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+        <EditText
+            android:id="@+id/edit_note"
+            android:hint="@string/note_label"
+            android:textColor="#212121"
+            android:textColorHint="#9E9E9E"
+            android:backgroundTint="@color/vert_clair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:padding="10dp"/>
 
         <Button
             android:id="@+id/btn_ajouter"
-            android:text="+ Ajouter"
+            android:text="@string/btn_ajouter"
             android:backgroundTint="@color/vert_principal"
             android:textColor="@color/blanc"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

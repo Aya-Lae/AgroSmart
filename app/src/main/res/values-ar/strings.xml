@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">أغروسمارت MA</string>
+    <string name="slogan">مساعدك الزراعي الذكي</string>
+
+    <!-- Navigation -->
+    <string name="meteo">الطقس</string>
+    <string name="chatbot">المساعد</string>
+    <string name="calendrier">التقويم</string>
+    <string name="base">المعرفة</string>
+    <string name="profil">الملف</string>
+
+    <!-- Auth -->
+    <string name="connexion">تسجيل الدخول</string>
+    <string name="inscription">إنشاء حساب</string>
+    <string name="email">البريد الإلكتروني *</string>
+    <string name="mot_de_passe">كلمة المرور *</string>
+    <string name="nom_complet">الاسم الكامل</string>
+    <string name="votre_nom">اسمك</string>
+    <string name="region">المنطقة</string>
+    <string name="region_hint">مثال: سطات، مراكش...</string>
+    <string name="culture_principale">المحصول الرئيسي</string>
+    <string name="culture_hint">مثال: قمح، زيتون، طماطم...</string>
+    <string name="se_connecter">تسجيل الدخول</string>
+    <string name="creer_compte">إنشاء حسابي</string>
+    <string name="email_hint">بريدك@الإلكتروني.com</string>
+    <string name="mdp_hint">كلمة المرور</string>
+
+    <!-- Météo -->
+    <string name="humidite">الرطوبة</string>
+    <string name="vent">الرياح</string>
+    <string name="coucher">الغروب</string>
+    <string name="conseil_agricole">🌾 النصيحة الزراعية</string>
+    <string name="next_6_days">الأيام الستة القادمة</string>
+    <string name="chercher_ville">ابحث عن مدينة...</string>
+    <string name="ok">بحث</string>
+    <string name="alerte">⚠️ تنبيه</string>
+
+    <!-- Chatbot -->
+    <string name="poser_question">اطرح سؤالك...</string>
+    <string name="envoyer">إرسال</string>
+    <string name="agrosmart_ecrit">أغروسمارت يكتب...</string>
+    <string name="bienvenue_chatbot">مرحباً! أنا أغروسمارت. كيف يمكنني مساعدتك اليوم؟</string>
+
+    <!-- Calendrier -->
+    <string name="titre_calendrier">📅 التقويم الزراعي</string>
+    <string name="sous_titre_calendrier">خطط لأنشطة موسمك</string>
+    <string name="nouvelle_activite">➕ نشاط جديد</string>
+    <string name="culture_label">المحصول (مثال: قمح، طماطم...)</string>
+    <string name="type_label">النوع (بذر، ري، حصاد...)</string>
+    <string name="date_label">التاريخ (مثال: 15/05/2026)</string>
+    <string name="note_label">ملاحظة (اختياري)</string>
+    <string name="btn_ajouter">+ إضافة</string>
+
+    <!-- Base -->
+    <string name="titre_base">📚 قاعدة المعرفة</string>
+    <string name="hors_ligne">✅ متاح بدون إنترنت</string>
+
+    <!-- Profil -->
+    <string name="mon_profil">ملفي الشخصي</string>
+    <string name="sauvegarder">💾 حفظ</string>
+    <string name="profil_mis_a_jour">✅ تم تحديث الملف!</string>
+    <string name="se_deconnecter">🚪 تسجيل الخروج</string>
+
+    <!-- Langue -->
+    <string name="langue_btn">AR 🌐</string>
+</resources>
