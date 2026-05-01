@@ -18,13 +18,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import android.widget.ImageView;
 
 public class DashboardFragment extends Fragment {
 
     private TextView txtNom, txtDate, txtSalutation;
     private TextView dashIconeMeteo, dashVille, dashDesc, dashConseil, dashTemp;
     private TextView dashNbActivites;
-    private TextView iconeNotif, txtNotifStatut;
+    private ImageView iconeNotifImg;
+    private TextView txtNotifStatut;
     private LinearLayout layoutActivites, btnToggleNotifs;
     private boolean notifsActives;
 
@@ -44,7 +46,7 @@ public class DashboardFragment extends Fragment {
         dashNbActivites = view.findViewById(R.id.dash_nb_activites);
         layoutActivites = view.findViewById(R.id.layout_activites_dashboard);
         btnToggleNotifs = view.findViewById(R.id.btn_toggle_notifs);
-        iconeNotif      = view.findViewById(R.id.icone_notif);
+        iconeNotifImg = view.findViewById(R.id.icone_notif_img);
         txtNotifStatut  = view.findViewById(R.id.txt_notif_statut);
 
         // Charger état notifs
@@ -90,6 +92,9 @@ public class DashboardFragment extends Fragment {
         view.findViewById(R.id.carte_meteo_dashboard).setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.meteoFragment));
 
+        view.findViewById(R.id.btn_ajouter_activite).setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.calendrierFragment));
+
         return view;
     }
 
@@ -114,11 +119,11 @@ public class DashboardFragment extends Fragment {
 
     private void mettreAJourBoutonNotif() {
         if (notifsActives) {
-            iconeNotif.setText("🔔");
+            iconeNotifImg.setImageResource(R.drawable.ic_notification);
             txtNotifStatut.setText("ON");
             btnToggleNotifs.setBackgroundResource(R.drawable.cercle_notif_actif);
         } else {
-            iconeNotif.setText("🔕");
+            iconeNotifImg.setImageResource(R.drawable.ic_notification);
             txtNotifStatut.setText("OFF");
             btnToggleNotifs.setBackgroundResource(R.drawable.cercle_notif_inactif);
         }

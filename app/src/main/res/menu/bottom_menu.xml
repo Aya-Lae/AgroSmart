@@ -3,20 +3,25 @@
     <item
         android:id="@+id/dashboardFragment"
         android:title="@string/accueil"
-        android:icon="@drawable/ic_accueil"/>
-    <item android:id="@+id/meteoFragment"
+        android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/meteoFragment"
         android:title="@string/meteo"
-        android:icon="@android:drawable/ic_menu_compass"/>
-    <item android:id="@+id/chatbotFragment"
+        android:icon="@drawable/ic_meteo"/>
+    <item
+        android:id="@+id/chatbotFragment"
         android:title="@string/chatbot"
-        android:icon="@android:drawable/ic_menu_send"/>
-    <item android:id="@+id/calendrierFragment"
+        android:icon="@drawable/ic_chat"/>
+    <item
+        android:id="@+id/calendrierFragment"
         android:title="@string/calendrier"
-        android:icon="@android:drawable/ic_menu_today"/>
-    <item android:id="@+id/baseFragment"
+        android:icon="@drawable/ic_calendrier"/>
+    <item
+        android:id="@+id/baseFragment"
         android:title="@string/base"
-        android:icon="@android:drawable/ic_menu_info_details"/>
-    <item android:id="@+id/profilFragment"
+        android:icon="@drawable/ic_base"/>
+    <item
+        android:id="@+id/profilFragment"
         android:title="@string/profil"
-        android:icon="@android:drawable/ic_menu_myplaces"/>
+        android:icon="@drawable/ic_profil"/>
 </menu>

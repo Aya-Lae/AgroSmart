@@ -20,29 +20,30 @@ public class MeteoNotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Récupérer la météo et envoyer la notification
         String ville = context.getSharedPreferences("agrico_prefs", 0)
-                .getString("agrico_prefs", "Casablanca");
+                .getString("ville", "Casablanca"); // ✅ clé corrigée
 
-        MeteoRepository repo = new MeteoRepository();
-        repo.getMeteo(ville, new MeteoRepository.MeteoCallback() {
-            @Override
-            public void onMeteo(Meteo meteo) {
-                String titre = "🌿 AgroSmart — Météo du jour";
-                String message = meteo.ville + " : " +
-                        Math.round(meteo.temperature) + "°C, " +
-                        meteo.description + "\n" +
-                        genererConseilCourt(meteo);
-                envoyerNotification(context, titre, message);
-            }
+        new Thread(() -> {
+            MeteoRepository repo = new MeteoRepository();
+            repo.getMeteo(ville, new MeteoRepository.MeteoCallback() {
+                @Override
+                public void onMeteo(Meteo meteo) {
+                    String titre = "🌿 AgroSmart — Météo du jour";
+                    String message = meteo.ville + " : " +
+                            Math.round(meteo.temperature) + "°C, " +
+                            meteo.description + "\n" +
+                            genererConseilCourt(meteo);
+                    envoyerNotification(context, titre, message);
+                }
 
-            @Override
-            public void onErreur(String erreur) {
-                envoyerNotification(context,
-                        "🌿 AgroSmart — Bonjour !",
-                        "Consultez la météo et planifiez votre journée agricole.");
-            }
-        });
+                @Override
+                public void onErreur(String erreur) {
+                    envoyerNotification(context,
+                            "🌿 AgroSmart — Bonjour !",
+                            "Consultez la météo et planifiez votre journée agricole.");
+                }
+            });
+        }).start(); // ✅ thread lancé
     }
 
     private String genererConseilCourt(Meteo meteo) {
