@@ -1,5 +1,8 @@
 package com.example.tryproject;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,16 +11,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.example.tryproject.data.MeteoRepository;
 import com.example.tryproject.model.Meteo;
 import com.example.tryproject.model.Prevision;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import com.example.tryproject.utils.ConseilsEngine;
 
 public class MeteoFragment extends Fragment {
+
+    private static final int REQUEST_LOCATION = 300;
 
     private TextView txtVille, txtDate, txtTemperature, txtMinMax;
     private TextView txtDescription, txtIcone, txtHumidite, txtVent;
@@ -25,6 +36,7 @@ public class MeteoFragment extends Fragment {
     private LinearLayout layoutPrevisions;
     private EditText editVille;
     private MeteoRepository repository;
+    private FusedLocationProviderClient fusedLocationClient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +60,8 @@ public class MeteoFragment extends Fragment {
         Button btnChercher = view.findViewById(R.id.btn_chercher);
 
         repository = new MeteoRepository();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(
+                requireActivity());
 
         // Date du jour
         String dateAujourdhui = new SimpleDateFormat("EEE d MMM", Locale.FRENCH)
@@ -55,25 +69,121 @@ public class MeteoFragment extends Fragment {
         txtDate.setText(dateAujourdhui.substring(0, 1).toUpperCase()
                 + dateAujourdhui.substring(1));
 
-        // Charger ville par défaut
-        chargerMeteo("Casablanca");
+        // Chercher par GPS automatiquement
+        demanderLocalisation();
 
+        // Bouton chercher manuellement
         btnChercher.setOnClickListener(v -> {
             String ville = editVille.getText().toString().trim();
-            if (!ville.isEmpty()) chargerMeteo(ville);
+            if (!ville.isEmpty()) {
+                // Sauvegarder la ville choisie
+                requireActivity()
+                        .getSharedPreferences("agrico_prefs", 0)
+                        .edit()
+                        .putString("ville_meteo", ville)
+                        .putBoolean("ville_manuelle", true)
+                        .apply();
+                chargerMeteoParVille(ville);
+            }
         });
 
         return view;
     }
 
-    private void chargerMeteo(String ville) {
-        txtErreur.setVisibility(View.GONE);
+    private void demanderLocalisation() {
+        // Si l'utilisateur a déjà choisi une ville manuellement
+        boolean villeManuelle = requireActivity()
+                .getSharedPreferences("agrico_prefs", 0)
+                .getBoolean("ville_manuelle", false);
 
+        if (villeManuelle) {
+            String ville = requireActivity()
+                    .getSharedPreferences("agrico_prefs", 0)
+                    .getString("ville_meteo", "Casablanca");
+            chargerMeteoParVille(ville);
+            return;
+        }
+
+        // Sinon utiliser le GPS
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Demander permission
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION);
+        } else {
+            utiliserGPS();
+        }
+    }
+
+    private void utiliserGPS() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) return;
+
+        txtVille.setText("Localisation...");
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(location -> {
+                    if (location != null) {
+                        chargerMeteoParGPS(location.getLatitude(),
+                                location.getLongitude());
+                    } else {
+                        // GPS indisponible → ville par défaut
+                        chargerMeteoParVille("Casablanca");
+                    }
+                })
+                .addOnFailureListener(e -> chargerMeteoParVille("Casablanca"));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_LOCATION) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                utiliserGPS();
+            } else {
+                // Permission refusée → Casablanca par défaut
+                chargerMeteoParVille("Casablanca");
+            }
+        }
+    }
+
+    private void chargerMeteoParGPS(double lat, double lon) {
+        txtErreur.setVisibility(View.GONE);
+        repository.getMeteoParCoordonnees(lat, lon,
+                new MeteoRepository.MeteoCallback() {
+                    @Override
+                    public void onMeteo(Meteo meteo) {
+                        // Sauvegarder la ville détectée
+                        requireActivity()
+                                .getSharedPreferences("agrico_prefs", 0)
+                                .edit()
+                                .putString("ville_meteo", meteo.ville)
+                                .apply();
+
+                        requireActivity().runOnUiThread(() -> afficherMeteo(meteo));
+
+                        repository.getPrevisionParCoordonnees(lat, lon, previsions ->
+                                requireActivity().runOnUiThread(() ->
+                                        afficherPrevisions(previsions)));
+                    }
+                    @Override
+                    public void onErreur(String erreur) {
+                        requireActivity().runOnUiThread(() ->
+                                chargerMeteoParVille("Casablanca"));
+                    }
+                });
+    }
+
+    private void chargerMeteoParVille(String ville) {
+        txtErreur.setVisibility(View.GONE);
         repository.getMeteo(ville, new MeteoRepository.MeteoCallback() {
             @Override
             public void onMeteo(Meteo meteo) {
                 requireActivity().runOnUiThread(() -> afficherMeteo(meteo));
-                // Charger aussi les prévisions
                 repository.getPrevisions(ville, previsions ->
                         requireActivity().runOnUiThread(() ->
                                 afficherPrevisions(previsions)));
@@ -81,7 +191,7 @@ public class MeteoFragment extends Fragment {
             @Override
             public void onErreur(String erreur) {
                 requireActivity().runOnUiThread(() -> {
-                    txtErreur.setText(erreur);
+                    txtErreur.setText("Ville introuvable. Essayez en anglais : ex: Tangier, Fez");
                     txtErreur.setVisibility(View.VISIBLE);
                 });
             }
@@ -89,7 +199,7 @@ public class MeteoFragment extends Fragment {
     }
 
     private void afficherMeteo(Meteo meteo) {
-        txtVille.setText(meteo.ville);
+        txtVille.setText("📍 " + meteo.ville);
         txtTemperature.setText(Math.round(meteo.temperature) + "°C");
         txtMinMax.setText(Math.round(meteo.temperatureMax) + "°C / "
                 + Math.round(meteo.temperatureMin) + "°C");
@@ -99,11 +209,9 @@ public class MeteoFragment extends Fragment {
         txtSunset.setText(meteo.sunset);
         txtIcone.setText(iconeEmoji(meteo.iconeCode));
 
-        // Alerte
         if (meteo.alerte != null) {
             txtAlerteBadge.setVisibility(View.VISIBLE);
         }
-
         txtConseil.setText(genererConseil(meteo));
     }
 
@@ -121,7 +229,6 @@ public class MeteoFragment extends Fragment {
         }
     }
 
-    // Convertit le code OpenWeather en emoji
     private String iconeEmoji(String code) {
         if (code == null) return "🌤";
         if (code.startsWith("01")) return "☀️";
@@ -132,22 +239,18 @@ public class MeteoFragment extends Fragment {
         if (code.startsWith("10")) return "🌦";
         if (code.startsWith("11")) return "⛈";
         if (code.startsWith("13")) return "❄️";
-        if (code.startsWith("50")) return "🌫";
         return "🌤";
     }
 
     private String genererConseil(Meteo meteo) {
-        if (meteo.humidite > 85)
-            return "💧 Humidité très élevée. Évitez d'irriguer et surveillez l'apparition de champignons sur vos cultures.";
-        if (meteo.temperature > 35)
-            return "🌡️ Forte chaleur. Privilégiez l'arrosage tôt le matin avant 8h ou le soir après 19h pour limiter l'évaporation.";
-        if (meteo.vitesseVent > 30)
-            return "💨 Vent fort aujourd'hui. Évitez les traitements phytosanitaires — ils seraient emportés par le vent.";
-        if (meteo.description.contains("pluie") || meteo.description.contains("pluvieux"))
-            return "🌧 Pluie prévue. Pas besoin d'irriguer aujourd'hui. Bonne journée pour les travaux en intérieur.";
-        if (meteo.temperature < 5)
-            return "🥶 Températures basses — risque de gel. Protégez les jeunes plants et les cultures sensibles.";
-        return "✅ Conditions favorables aujourd'hui. Bonne journée pour les semis, la taille ou le traitement de vos cultures.";
+        String culture = requireActivity()
+                .getSharedPreferences(AuthActivity.PREFS, 0)
+                .getString(AuthActivity.KEY_CULTURE, "");
+        String region = requireActivity()
+                .getSharedPreferences(AuthActivity.PREFS, 0)
+                .getString(AuthActivity.KEY_REGION, "");
+
+        return ConseilsEngine.genererConseil(meteo, culture, region);
     }
 
     private String capitaliser(String s) {

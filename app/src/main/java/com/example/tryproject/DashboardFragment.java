@@ -18,7 +18,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 import android.widget.ImageView;
+
+import com.example.tryproject.utils.ConseilsEngine;
+
 
 public class DashboardFragment extends Fragment {
 
@@ -204,11 +208,10 @@ public class DashboardFragment extends Fragment {
     }
 
     private String conseilCourt(Meteo meteo) {
-        if (meteo.temperature > 35) return "💡 Arrosez tôt le matin !";
-        if (meteo.description.contains("pluie")) return "💡 Pas besoin d'irriguer.";
-        if (meteo.humidite > 85) return "💡 Risque fongique élevé.";
-        if (meteo.vitesseVent > 30) return "💡 Évitez les traitements.";
-        return "💡 Bonne journée pour travailler !";
+        String culture = requireActivity()
+                .getSharedPreferences(AuthActivity.PREFS, 0)
+                .getString(AuthActivity.KEY_CULTURE, "");
+        return ConseilsEngine.conseilCourt(meteo, culture);
     }
 
     private String capitaliser(String s) {

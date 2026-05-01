@@ -66,6 +66,84 @@ public class MeteoRepository {
             }
         }).start();
     }
+    public void getMeteoParCoordonnees(double lat, double lon, MeteoCallback callback) {
+        new Thread(() -> {
+            try {
+                String urlString = URL_METEO
+                        + "?lat=" + lat
+                        + "&lon=" + lon
+                        + "&appid=" + API_KEY
+                        + "&units=metric&lang=fr";
+
+                String response = fetch(urlString);
+                JSONObject json = new JSONObject(response);
+                JSONObject main = json.getJSONObject("main");
+                JSONObject wind = json.getJSONObject("wind");
+                JSONObject weather = json.getJSONArray("weather").getJSONObject(0);
+                JSONObject sys = json.getJSONObject("sys");
+
+                long sunsetTimestamp = sys.getLong("sunset") * 1000L;
+                String sunset = new SimpleDateFormat("HH:mm", Locale.FRENCH)
+                        .format(new Date(sunsetTimestamp));
+
+                Meteo meteo = new Meteo(
+                        json.getString("name"),
+                        main.getDouble("temp"),
+                        main.getDouble("temp_min"),
+                        main.getDouble("temp_max"),
+                        weather.getString("description"),
+                        main.getInt("humidity"),
+                        wind.getDouble("speed") * 3.6
+                );
+                meteo.sunset = sunset;
+                meteo.iconeCode = weather.getString("icon");
+
+                callback.onMeteo(meteo);
+
+            } catch (Exception e) {
+                callback.onErreur("Erreur GPS : " + e.getMessage());
+            }
+        }).start();
+    }
+
+    public void getPrevisionParCoordonnees(double lat, double lon,
+                                           PrevisionCallback callback) {
+        new Thread(() -> {
+            try {
+                String urlString = URL_PREVISIONS
+                        + "?lat=" + lat
+                        + "&lon=" + lon
+                        + "&appid=" + API_KEY
+                        + "&units=metric&lang=fr&cnt=48";
+
+                String response = fetch(urlString);
+                JSONObject json = new JSONObject(response);
+                JSONArray liste = json.getJSONArray("list");
+
+                List<Prevision> previsions = new ArrayList<>();
+                for (int i = 8; i < liste.length() && previsions.size() < 6; i += 8) {
+                    JSONObject item = liste.getJSONObject(i);
+                    JSONObject main = item.getJSONObject("main");
+                    JSONObject weather = item.getJSONArray("weather").getJSONObject(0);
+
+                    long timestamp = item.getLong("dt") * 1000L;
+                    String jour = new SimpleDateFormat("EEE", Locale.FRENCH)
+                            .format(new Date(timestamp));
+                    jour = jour.substring(0, 1).toUpperCase() + jour.substring(1);
+
+                    Prevision p = new Prevision();
+                    p.jour = jour;
+                    p.temperature = main.getDouble("temp");
+                    p.iconeCode = weather.getString("icon");
+                    previsions.add(p);
+                }
+                callback.onPrevisions(previsions);
+
+            } catch (Exception e) {
+                callback.onPrevisions(new ArrayList<>());
+            }
+        }).start();
+    }
 
     public void getPrevisions(String ville, PrevisionCallback callback) {
         new Thread(() -> {
