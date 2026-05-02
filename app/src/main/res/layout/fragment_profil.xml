@@ -1,36 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fond_clair">
+    android:background="#F1F5F0">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Header vert avec feuilles décoratives -->
+        <!-- ═══════════════ HEADER VERT ═══════════════ -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:background="@color/vert_principal">
+            android:layout_height="220dp"
+            android:background="@drawable/header_dashboard_bg">
 
-            <!-- Cercles décoratifs feuilles -->
-            <View
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="top|start"
-                android:layout_margin="16dp"
-                android:background="@drawable/cercle_feuille_gauche"
-                android:alpha="0.3"/>
 
-            <View
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="top|end"
-                android:layout_margin="16dp"
-                android:background="@drawable/cercle_feuille_droite"
-                android:alpha="0.3"/>
+
+
 
             <!-- Contenu header -->
             <LinearLayout
@@ -38,505 +26,592 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:paddingTop="24dp">
-
-                <TextView
-                    android:text="Mon profil"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/blanc"
-                    android:layout_marginBottom="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:paddingTop="16dp">
 
                 <!-- Avatar -->
                 <FrameLayout
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center">
 
                     <TextView
                         android:id="@+id/txt_avatar"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/profil_avatar_bg"
+                        android:gravity="center"
                         android:text="A"
-                        android:textSize="36sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/texte_gris"
-                        android:gravity="center"
-                        android:background="@drawable/cercle_avatar_blanc"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"/>
+                        android:textColor="@color/vert_principal"
+                        android:textSize="32sp"
+                        android:textStyle="bold"/>
 
-                    <!-- Bouton edit -->
-                    <TextView
-                        android:text="✏️"
-                        android:textSize="14sp"
-                        android:gravity="center"
-                        android:background="@drawable/cercle_edit"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="bottom|end"/>
-
+                    <!-- Badge edit -->
+                    <LinearLayout
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="bottom|end"
+                        android:background="@drawable/cercle_vert_fonce"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_edit"
+                            android:contentDescription="edit"
+                            app:tint="@color/blanc"/>
+                    </LinearLayout>
                 </FrameLayout>
 
                 <TextView
                     android:id="@+id/txt_nom_header"
-                    android:text=""
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/blanc"
-                    android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text=""
+                    android:textColor="@color/blanc"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/txt_email_header"
-                    android:text=""
-                    android:textSize="13sp"
-                    android:textColor="#AAFFFFFF"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text=""
+                    android:textColor="#AAFFFFFF"
+                    android:textSize="13sp"/>
             </LinearLayout>
         </FrameLayout>
 
-        <!-- Carte infos compte -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/blanc"
-            android:elevation="2dp"
-            android:layout_margin="16dp">
-
-            <!-- Région -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:background="@drawable/cercle_icone_vert">
-                    <TextView android:text="📍" android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-                    <TextView android:text="Région" android:textSize="11sp"
-                        android:textColor="@color/texte_gris"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <EditText android:id="@+id/edit_region"
-                        android:textSize="15sp" android:textColor="#212121"
-                        android:background="@null"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <TextView android:text="✏" android:textSize="16sp"
-                    android:textColor="@color/texte_gris"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="#F0F0F0" android:layout_marginStart="68dp"/>
-
-            <!-- Nom -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:background="@drawable/cercle_icone_vert">
-                    <TextView android:text="👤" android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-                    <TextView android:text="Nom" android:textSize="11sp"
-                        android:textColor="@color/texte_gris"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <EditText android:id="@+id/edit_nom"
-                        android:textSize="15sp" android:textColor="#212121"
-                        android:background="@null"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <TextView android:text="✏" android:textSize="16sp"
-                    android:textColor="@color/texte_gris"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="#F0F0F0" android:layout_marginStart="68dp"/>
-
-            <!-- Email -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:background="@drawable/cercle_icone_vert">
-                    <TextView android:text="✉️" android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-                    <TextView android:text="Email" android:textSize="11sp"
-                        android:textColor="@color/texte_gris"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView android:id="@+id/txt_email_detail"
-                        android:textSize="15sp" android:textColor="#212121"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <TextView android:text="✏" android:textSize="16sp"
-                    android:textColor="@color/texte_gris"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <!-- Culture -->
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="#F0F0F0" android:layout_marginStart="68dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:background="@drawable/cercle_icone_vert">
-                    <TextView android:text="🌾" android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-                    <TextView android:text="Culture" android:textSize="11sp"
-                        android:textColor="@color/texte_gris"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <EditText android:id="@+id/edit_culture"
-                        android:textSize="15sp" android:textColor="#212121"
-                        android:background="@null"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <TextView android:text="✏" android:textSize="16sp"
-                    android:textColor="@color/texte_gris"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Bouton sauvegarder -->
-        <Button
-            android:id="@+id/btn_sauvegarder"
-            android:text="Sauvegarder"
-            android:backgroundTint="@color/vert_accent"
-            android:textColor="@color/blanc"
+        <!-- ═══════════════ CARTE INFOS ═══════════════ -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="@color/blanc">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <!-- Région -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cercle_vert_clair_bg"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_location"
+                            android:contentDescription="region"
+                            app:tint="@color/vert_principal"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Région"
+                            android:textColor="@color/texte_gris"
+                            android:textSize="11sp"/>
+
+                        <EditText
+                            android:id="@+id/edit_region"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:textColor="#212121"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_edit"
+                        android:contentDescription="modifier"
+                        app:tint="@color/texte_gris"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#F0F0F0" android:layout_marginStart="64dp"/>
+
+                <!-- Nom -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cercle_vert_clair_bg"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_profil"
+                            android:contentDescription="nom"
+                            app:tint="@color/vert_principal"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nom"
+                            android:textColor="@color/texte_gris"
+                            android:textSize="11sp"/>
+
+                        <EditText
+                            android:id="@+id/edit_nom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:textColor="#212121"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_edit"
+                        android:contentDescription="modifier"
+                        app:tint="@color/texte_gris"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#F0F0F0" android:layout_marginStart="64dp"/>
+
+                <!-- Email -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cercle_vert_clair_bg"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_email"
+                            android:contentDescription="email"
+                            app:tint="@color/vert_principal"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:textColor="@color/texte_gris"
+                            android:textSize="11sp"/>
+
+                        <TextView
+                            android:id="@+id/txt_email_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#212121"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_edit"
+                        android:contentDescription="modifier"
+                        app:tint="@color/texte_gris"/>
+                </LinearLayout>
+
+                <!-- Champ culture caché — garde la logique Java -->
+                <EditText
+                    android:id="@+id/edit_culture"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Bouton Sauvegarder -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_sauvegarder"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Sauvegarder"
+            android:textColor="@color/blanc"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/vert_principal"
+            app:cornerRadius="14dp"/>
 
         <TextView
             android:id="@+id/txt_confirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:textColor="@color/vert_accent"
-            android:layout_marginBottom="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textSize="13sp"/>
 
-        <!-- Carte Chatbot avancé -->
-        <LinearLayout
+        <!-- ═══════════════ CHATBOT AVANCÉ ═══════════════ -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/carte_activer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/blanc"
-            android:elevation="3dp"
-            android:padding="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="12dp"
-            android:clickable="true"
-            android:focusable="true">
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/blanc">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="12dp">
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <!-- Icône couronne -->
+                <!-- Header chatbot -->
                 <LinearLayout
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:gravity="center"
-                    android:background="@drawable/cercle_vert_fonce"
-                    android:layout_marginEnd="12dp">
-                    <TextView android:text="👑" android:textSize="22sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:text="Chatbot avancé (API)"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/vert_principal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:text="Débloquez tout le potentiel du chatbot"
-                        android:textSize="12sp"
-                        android:textColor="@color/texte_gris"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/cercle_vert_fonce"
+                        android:gravity="center"
+                        android:layout_marginEnd="12dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="👑"
+                            android:textSize="22sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chatbot avancé (API)"
+                            android:textColor="@color/vert_principal"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Débloquez tout le potentiel du chatbot avec l'API avancée."
+                            android:textColor="@color/texte_gris"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
+                    <!-- Bulle décorative -->
+                    <LinearLayout
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/cercle_vert_clair_bg"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_chat"
+                            android:contentDescription="chat"
+                            app:tint="@color/vert_principal"/>
+                    </LinearLayout>
                 </LinearLayout>
 
-                <!-- Icône chat décorative -->
-                <TextView android:text="💬" android:textSize="32sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                <!-- Features avec icônes -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_check_circle"
+                        android:contentDescription="check"
+                        android:layout_marginEnd="8dp"
+                        app:tint="@color/vert_accent"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Réponses plus précises et détaillées"
+                        android:textColor="#444"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_check_circle"
+                        android:contentDescription="check"
+                        android:layout_marginEnd="8dp"
+                        app:tint="@color/vert_accent"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Accès aux modèles avancés"
+                        android:textColor="#444"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_check_circle"
+                        android:contentDescription="check"
+                        android:layout_marginEnd="8dp"
+                        app:tint="@color/vert_accent"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expérience sans limite"
+                        android:textColor="#444"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+                <!-- Bouton Payer -->
+                <LinearLayout
+                    android:id="@+id/btn_payer_activer"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/btn_vert_arrondi"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_profil"
+                        android:contentDescription="lock"
+                        android:layout_marginEnd="8dp"
+                        app:tint="@color/blanc"/>
+
+                    <TextView
+                        android:id="@+id/txt_statut_chatbot"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Payer pour activer"
+                        android:textColor="@color/blanc"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="@color/blanc"
+                        android:textSize="22sp"/>
+                </LinearLayout>
 
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-            <!-- Features -->
-            <LinearLayout android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:orientation="horizontal"
-                android:layout_marginBottom="6dp">
-                <TextView android:text="✅ " android:textColor="@color/vert_accent"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <TextView android:text="Réponses plus précises et détaillées"
-                    android:textSize="13sp" android:textColor="#444"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:orientation="horizontal"
-                android:layout_marginBottom="6dp">
-                <TextView android:text="✅ " android:textColor="@color/vert_accent"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <TextView android:text="Accès aux modèles avancés"
-                    android:textSize="13sp" android:textColor="#444"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
-                <TextView android:text="✅ " android:textColor="@color/vert_accent"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <TextView android:text="Expérience sans limite"
-                    android:textSize="13sp" android:textColor="#444"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <!-- Bouton payer -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/btn_vert_arrondi"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:clickable="true"
-                android:focusable="true"
-                android:id="@+id/btn_payer_activer">
-
-                <TextView android:text="🔒 " android:textSize="16sp"
-                    android:textColor="@color/blanc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/txt_statut_chatbot"
-                    android:text="Payer pour activer"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/blanc"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
-                <TextView android:text=" ›" android:textSize="20sp"
-                    android:textColor="@color/blanc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <!-- Carte liens secondaires -->
-        <LinearLayout
+        <!-- ═══════════════ LIENS SECONDAIRES ═══════════════ -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/blanc"
-            android:elevation="2dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="@color/blanc">
 
-            <!-- Historique paiements -->
             <LinearLayout
-                android:id="@+id/btn_historique"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp"
-                android:clickable="true"
-                android:focusable="true">
+                android:orientation="vertical"
+                android:padding="8dp">
 
+                <!-- Historique paiements -->
                 <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:background="@drawable/cercle_icone_vert">
-                    <TextView android:text="💳" android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    android:id="@+id/btn_historique"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cercle_vert_clair_bg"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_payment"
+                            android:contentDescription="paiement"
+                            app:tint="@color/vert_principal"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Historique des paiements"
+                        android:textColor="#212121"
+                        android:textSize="15sp"/>
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_arrow_down"
+                        android:contentDescription="fleche"
+                        android:rotation="-90"
+                        app:tint="@color/texte_gris"/>
                 </LinearLayout>
 
-                <TextView
-                    android:text="Historique des paiements"
-                    android:textSize="15sp"
-                    android:textColor="#212121"
-                    android:layout_weight="1"
-                    android:layout_marginStart="12dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#F0F0F0" android:layout_marginStart="64dp"/>
 
-                <TextView android:text="›" android:textSize="22sp"
-                    android:textColor="@color/texte_gris"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                android:background="#F0F0F0" android:layout_marginStart="68dp"/>
-
-            <!-- Aide et support -->
-            <LinearLayout
-                android:id="@+id/btn_aide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp"
-                android:clickable="true"
-                android:focusable="true">
-
+                <!-- Aide -->
                 <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:background="@drawable/cercle_icone_vert">
-                    <TextView android:text="❓" android:textSize="18sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    android:id="@+id/btn_aide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cercle_vert_clair_bg"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_help"
+                            android:contentDescription="aide"
+                            app:tint="@color/vert_principal"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Aide et support"
+                        android:textColor="#212121"
+                        android:textSize="15sp"/>
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_arrow_down"
+                        android:contentDescription="fleche"
+                        android:rotation="-90"
+                        app:tint="@color/texte_gris"/>
                 </LinearLayout>
 
-                <TextView
-                    android:text="Aide et support"
-                    android:textSize="15sp"
-                    android:textColor="#212121"
-                    android:layout_weight="1"
-                    android:layout_marginStart="12dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-
-                <TextView android:text="›" android:textSize="22sp"
-                    android:textColor="@color/texte_gris"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-
-        <!-- Bouton déconnexion -->
+        <!-- ═══════════════ BOUTON DÉCONNEXION ═══════════════ -->
         <LinearLayout
             android:id="@+id/btn_deconnexion"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@color/carte_bg"
+            android:layout_height="52dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
+            android:background="@drawable/btn_deconnexion_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:clickable="true"
             android:focusable="true">
 
-            <TextView android:text="↪ " android:textSize="18sp"
-                android:textColor="@color/dore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_logout"
+                android:contentDescription="deconnexion"
+                android:layout_marginEnd="8dp"
+                app:tint="#E53935"/>
+
             <TextView
-                android:text="Se déconnecter"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/dore"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Se déconnecter"
+                android:textColor="#E53935"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </LinearLayout>

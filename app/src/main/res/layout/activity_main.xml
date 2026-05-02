@@ -3,45 +3,83 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/fond_clair">
+    android:background="@color/fond_clair"
+    android:orientation="vertical">
 
-    <!-- Barre du haut -->
+    <!-- Barre du haut TRANSPARENTE -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="75dp"
         android:background="@color/vert_principal"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingEnd="20dp">
 
+        <!-- Remplace l'ImageView par : -->
         <TextView
-            android:text="🌿 AgroSmart MA"
-            android:textColor="@color/blanc"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="🌿"
+            android:textSize="22sp" />
 
         <!-- Bouton langue -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="AgroSmart MA"
+            android:textColor="@color/blanc"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/btn_langue"
-            android:text="FR 🌐"
-            android:textColor="@color/blanc"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/btn_outline"
             android:paddingStart="10dp"
+            android:paddingTop="5dp"
             android:paddingEnd="10dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:paddingBottom="5dp"
+            android:text="FR 🌐"
+            android:textColor="@color/blanc"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <!-- Icône notification alignée -->
+        <LinearLayout
+            android:id="@+id/btn_toggle_notifs_main"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/cercle_notif_actif"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/icone_notif_main"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:contentDescription="notification"
+                android:src="@drawable/ic_notification"
+                app:tint="@color/blanc" />
+
+            <TextView
+                android:id="@+id/txt_notif_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ON"
+                android:textColor="@color/blanc"
+                android:textSize="7sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </LinearLayout>
-
 
     <!-- Conteneur des écrans -->
     <androidx.fragment.app.FragmentContainerView
@@ -50,8 +88,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:navGraph="@navigation/nav_graph"
-        app:defaultNavHost="true"/>
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
 
     <!-- Barre de navigation en bas -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -59,8 +97,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blanc"
-        app:menu="@menu/bottom_menu"
         app:itemIconTint="@color/nav_couleurs"
-        app:itemTextColor="@color/nav_couleurs"/>
+        app:itemTextColor="@color/nav_couleurs"
+        app:menu="@menu/bottom_menu" />
 
 </LinearLayout>

@@ -1,10 +1,13 @@
 package com.example.tryproject;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -13,13 +16,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.tryproject.data.FichesData;
 import com.example.tryproject.model.FicheCulture;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BaseFragment extends Fragment {
 
     private RecyclerView recyclerFiches;
     private ScrollView vueDetail;
-    private List<FicheCulture> fiches;
+    private LinearLayout layoutListe;
+    private EditText editRecherche;
+    private List<FicheCulture> toutesLesFiches;
+    private FicheAdapter adapter;
 
     // Vues du détail
     private TextView detailTitre, detailDescription;
@@ -31,13 +38,22 @@ public class BaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base, container, false);
 
-        recyclerFiches  = view.findViewById(R.id.recycler_fiches);
-        vueDetail       = view.findViewById(R.id.vue_detail);
-        detailTitre     = view.findViewById(R.id.detail_titre);
+        // Vues principales
+        recyclerFiches    = view.findViewById(R.id.recycler_fiches);
+        vueDetail         = view.findViewById(R.id.vue_detail);
+        layoutListe       = view.findViewById(R.id.layout_liste);
+        editRecherche     = view.findViewById(R.id.edit_recherche);
+        detailTitre       = view.findViewById(R.id.detail_titre);
         detailDescription = view.findViewById(R.id.detail_description);
-        Button btnRetour  = view.findViewById(R.id.btn_retour);
 
-        // Récupérer les sections dynamiquement
+        // Bouton retour
+        LinearLayout btnRetour = view.findViewById(R.id.btn_retour);
+        btnRetour.setOnClickListener(v -> {
+            vueDetail.setVisibility(View.GONE);
+            layoutListe.setVisibility(View.VISIBLE);
+        });
+
+        // Sections détail
         int[] sectionIds = {R.id.section1, R.id.section2, R.id.section3,
                 R.id.section4, R.id.section5};
         for (int i = 0; i < 5; i++) {
@@ -46,21 +62,38 @@ public class BaseFragment extends Fragment {
             sectionContenus[i] = s.findViewById(R.id.section_contenu);
         }
 
-        fiches = FichesData.getToutes();
-        FicheAdapter adapter = new FicheAdapter(fiches, this::afficherDetail);
+        // Charger les fiches
+        toutesLesFiches = FichesData.getToutes();
+        adapter = new FicheAdapter(toutesLesFiches, this::afficherDetail);
         recyclerFiches.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerFiches.setAdapter(adapter);
 
-        btnRetour.setOnClickListener(v -> {
-            vueDetail.setVisibility(View.GONE);
-            recyclerFiches.setVisibility(View.VISIBLE);
+        // Recherche en temps réel
+        editRecherche.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {}
+            @Override
+            public void afterTextChanged(Editable s) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String query = s.toString().toLowerCase().trim();
+                List<FicheCulture> filtrees = new ArrayList<>();
+                for (FicheCulture f : toutesLesFiches) {
+                    if (f.nom.toLowerCase().contains(query)) {
+                        filtrees.add(f);
+                    }
+                }
+                adapter.mettreAJour(filtrees);
+            }
         });
 
         return view;
     }
 
     private void afficherDetail(FicheCulture fiche) {
-        recyclerFiches.setVisibility(View.GONE);
+        layoutListe.setVisibility(View.GONE);
         vueDetail.setVisibility(View.VISIBLE);
 
         detailTitre.setText(fiche.emoji + " " + fiche.nom);
@@ -87,17 +120,23 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    // ===== ADAPTER =====
+    // ═══════════════ ADAPTER ═══════════════
     static class FicheAdapter extends RecyclerView.Adapter<FicheAdapter.ViewHolder> {
 
         interface OnFicheClick { void onClick(FicheCulture fiche); }
 
         private List<FicheCulture> fiches;
-        private OnFicheClick listener;
+        private final OnFicheClick listener;
 
         FicheAdapter(List<FicheCulture> fiches, OnFicheClick listener) {
             this.fiches   = fiches;
             this.listener = listener;
+        }
+
+        // Mise à jour pour la recherche
+        public void mettreAJour(List<FicheCulture> nouvelles) {
+            fiches = nouvelles;
+            notifyDataSetChanged();
         }
 
         @NonNull

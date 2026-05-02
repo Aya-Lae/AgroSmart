@@ -1,99 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/fond_clair">
+    android:background="#F1F5F0">
 
-    <!-- Header -->
+    <!-- ══════════════════════════════════ -->
+    <!-- LISTE DES FICHES                  -->
+    <!-- ══════════════════════════════════ -->
     <LinearLayout
+        android:id="@+id/layout_liste"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/vert_principal"
-        android:padding="16dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:text="@string/titre_base"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/blanc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <!-- HEADER VERT -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/header_base_bg"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:paddingBottom="28dp">
 
-        <TextView
-            android:text="@string/hors_ligne"
-            android:textSize="12sp"
-            android:textColor="#CCFFCC"
-            android:layout_marginTop="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <!-- Icône + Titre -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/cercle_blanc_transparent"
+                    android:gravity="center"
+                    android:layout_marginEnd="14dp">
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@drawable/ic_base"
+                        android:contentDescription="base"
+                        app:tint="@color/blanc"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Base de connaissances"
+                        android:textColor="@color/blanc"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <!-- Badge hors ligne -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/badge_hors_ligne"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:layout_marginTop="6dp">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_check_circle"
+                            android:contentDescription="check"
+                            android:layout_marginEnd="6dp"
+                            app:tint="#52B788"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Disponible hors ligne"
+                            android:textColor="#AAFFFFFF"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- BARRE DE RECHERCHE (sort du header) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/search_bar_bg"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_search"
+                    android:contentDescription="recherche"
+                    android:layout_marginEnd="10dp"
+                    app:tint="@color/texte_gris"/>
+
+                <android.widget.EditText
+                    android:id="@+id/edit_recherche"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Rechercher une culture..."
+                    android:textColorHint="#BDBDBD"
+                    android:textColor="#212121"
+                    android:textSize="14sp"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_filter"
+                    android:contentDescription="filtrer"
+                    app:tint="@color/vert_principal"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- LISTE -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_fiches"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:clipToPadding="false"/>
+
     </LinearLayout>
 
-    <!-- Liste -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_fiches"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:clipToPadding="false"/>
-
-    <!-- Détail -->
+    <!-- ══════════════════════════════════ -->
+    <!-- VUE DÉTAIL                        -->
+    <!-- ══════════════════════════════════ -->
     <ScrollView
         android:id="@+id/vue_detail"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/fond_clair">
+        android:layout_height="match_parent"
+        android:background="#F1F5F0">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <!-- Header détail -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/vert_principal"
-                android:padding="16dp"
+                android:background="@drawable/header_base_bg"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="16dp">
 
-                <Button
+                <!-- Bouton retour -->
+                <LinearLayout
                     android:id="@+id/btn_retour"
-                    android:text="←"
-                    android:textColor="@color/blanc"
-                    android:backgroundTint="@color/vert_clair"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="12dp"/>
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/cercle_blanc_transparent"
+                    android:gravity="center"
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_right"
+                        android:contentDescription="retour"
+                        android:rotation="180"
+                        app:tint="@color/blanc"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/detail_titre"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/blanc"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blanc"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <!-- Description -->
-            <TextView
-                android:id="@+id/detail_description"
-                android:textSize="14sp"
-                android:textColor="@color/texte_gris"
-                android:padding="16dp"
-                android:lineSpacingExtra="4dp"
-                android:background="@color/blanc"
-                android:layout_marginBottom="8dp"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/blanc">
 
-            <!-- Sections infos -->
+                <TextView
+                    android:id="@+id/detail_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="4dp"
+                    android:padding="16dp"
+                    android:textColor="@color/texte_gris"
+                    android:textSize="14sp"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Sections -->
             <include layout="@layout/section_detail" android:id="@+id/section1"/>
             <include layout="@layout/section_detail" android:id="@+id/section2"/>
             <include layout="@layout/section_detail" android:id="@+id/section3"/>

@@ -16,6 +16,8 @@ import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.tryproject.notifications.NotificationScheduler;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,6 +67,30 @@ public class MainActivity extends AppCompatActivity {
                     .apply();
             changerLangue(nouvelleLangue);
         });
+
+        // Bouton notification dans la barre principale
+        ImageView iconeNotifMain = findViewById(R.id.icone_notif_main);
+        TextView txtNotifMain = findViewById(R.id.txt_notif_main);
+        LinearLayout btnNotifsMain = findViewById(R.id.btn_toggle_notifs_main);
+
+        boolean[] notifsActives = {getSharedPreferences("agrico_prefs", 0)
+                .getBoolean("notifs_actives", true)};
+
+        mettreAJourNotifMain(iconeNotifMain, txtNotifMain, btnNotifsMain, notifsActives[0]);
+
+        btnNotifsMain.setOnClickListener(v -> {
+            notifsActives[0] = !notifsActives[0];
+            getSharedPreferences("agrico_prefs", 0)
+                    .edit()
+                    .putBoolean("notifs_actives", notifsActives[0])
+                    .apply();
+            if (notifsActives[0]) {
+                NotificationScheduler.programmerNotificationQuotidienne(this);
+            } else {
+                NotificationScheduler.annulerNotifications(this);
+            }
+            mettreAJourNotifMain(iconeNotifMain, txtNotifMain, btnNotifsMain, notifsActives[0]);
+        });
     }
 
     private void appliquerLangue(String langue) {
@@ -80,5 +106,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
+    }
+
+    private void mettreAJourNotifMain(ImageView icone, TextView txt,
+                                      LinearLayout btn, boolean actif) {
+        icone.setImageResource(R.drawable.ic_notification);
+        txt.setText(actif ? "ON" : "OFF");
+        btn.setBackgroundResource(actif ?
+                R.drawable.cercle_notif_actif :
+                R.drawable.cercle_notif_inactif);
     }
 }

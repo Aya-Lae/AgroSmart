@@ -29,10 +29,9 @@ public class DashboardFragment extends Fragment {
     private TextView txtNom, txtDate, txtSalutation;
     private TextView dashIconeMeteo, dashVille, dashDesc, dashConseil, dashTemp;
     private TextView dashNbActivites;
-    private ImageView iconeNotifImg;
-    private TextView txtNotifStatut;
-    private LinearLayout layoutActivites, btnToggleNotifs;
-    private boolean notifsActives;
+
+    private LinearLayout layoutActivites;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,18 +48,9 @@ public class DashboardFragment extends Fragment {
         dashTemp        = view.findViewById(R.id.dash_temp_meteo);
         dashNbActivites = view.findViewById(R.id.dash_nb_activites);
         layoutActivites = view.findViewById(R.id.layout_activites_dashboard);
-        btnToggleNotifs = view.findViewById(R.id.btn_toggle_notifs);
-        iconeNotifImg = view.findViewById(R.id.icone_notif_img);
-        txtNotifStatut  = view.findViewById(R.id.txt_notif_statut);
 
-        // Charger état notifs
-        notifsActives = requireActivity()
-                .getSharedPreferences("agrico_prefs", 0)
-                .getBoolean("notifs_actives", true);
-        mettreAJourBoutonNotif();
 
-        // Toggle notifs
-        btnToggleNotifs.setOnClickListener(v -> toggleNotifications());
+
 
         // Nom et salutation
         String nom = requireActivity()
@@ -102,36 +92,8 @@ public class DashboardFragment extends Fragment {
         return view;
     }
 
-    private void toggleNotifications() {
-        notifsActives = !notifsActives;
 
-        // Sauvegarder l'état
-        requireActivity()
-                .getSharedPreferences("agrico_prefs", 0)
-                .edit()
-                .putBoolean("notifs_actives", notifsActives)
-                .apply();
 
-        if (notifsActives) {
-            NotificationScheduler.programmerNotificationQuotidienne(requireContext());
-        } else {
-            NotificationScheduler.annulerNotifications(requireContext());
-        }
-
-        mettreAJourBoutonNotif();
-    }
-
-    private void mettreAJourBoutonNotif() {
-        if (notifsActives) {
-            iconeNotifImg.setImageResource(R.drawable.ic_notification);
-            txtNotifStatut.setText("ON");
-            btnToggleNotifs.setBackgroundResource(R.drawable.cercle_notif_actif);
-        } else {
-            iconeNotifImg.setImageResource(R.drawable.ic_notification);
-            txtNotifStatut.setText("OFF");
-            btnToggleNotifs.setBackgroundResource(R.drawable.cercle_notif_inactif);
-        }
-    }
 
     private void chargerMeteo(String ville) {
         new MeteoRepository().getMeteo(ville, new MeteoRepository.MeteoCallback() {

@@ -121,8 +121,10 @@ public class CalendrierFragment extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Activite a = activites.get(position);
             holder.titre.setText(a.type + " — " + a.culture);
-            holder.date.setText("📅 " + a.date);
+            holder.date.setText(" " + a.date);
             holder.note.setText(a.note);
+            TextView badge = holder.itemView.findViewById(R.id.item_badge_type);
+            if (badge != null) badge.setText(a.type);
             holder.check.setChecked(a.faite);
             // texte barré si fait
             holder.titre.setPaintFlags(a.faite

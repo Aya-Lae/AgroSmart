@@ -1,117 +1,326 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/fond_clair">
+    android:background="#F1F5F0">
 
-    <!-- Header -->
+    <!-- HEADER VERT -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/vert_principal"
-        android:padding="16dp"
-        android:orientation="vertical">
+        android:background="@drawable/header_dashboard_bg"
+        android:padding="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="24dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        <TextView
-            android:text="@string/titre_calendrier"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/blanc"
+        <LinearLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/cercle_blanc_transparent"
+            android:gravity="center"
+            android:layout_marginEnd="16dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_calendrier"
+                android:contentDescription="calendrier"
+                app:tint="@color/blanc"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:text="@string/sous_titre_calendrier"
-            android:textSize="12sp"
-            android:textColor="#CCFFCC"
-            android:layout_marginTop="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <!-- Formulaire ajout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/blanc"
-        android:elevation="4dp"
-        android:padding="16dp"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:text="@string/nouvelle_activite"
-            android:textStyle="bold"
-            android:textColor="@color/vert_principal"
-            android:textSize="15sp"
-            android:layout_marginBottom="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:id="@+id/edit_culture"
-            android:hint="@string/culture_label"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E"
-            android:backgroundTint="@color/vert_clair"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:padding="10dp"/>
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edit_type"
-            android:hint="@string/type_label"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E"
-            android:backgroundTint="@color/vert_clair"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:padding="10dp"/>
+            <TextView
+                android:text="Calendrier agricole"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/blanc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-        <EditText
-            android:id="@+id/edit_date"
-            android:hint="@string/date_label"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E"
-            android:backgroundTint="@color/vert_clair"
-            android:inputType="datetime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:padding="10dp"/>
-
-        <EditText
-            android:id="@+id/edit_note"
-            android:hint="@string/note_label"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E"
-            android:backgroundTint="@color/vert_clair"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:padding="10dp"/>
-
-        <Button
-            android:id="@+id/btn_ajouter"
-            android:text="@string/btn_ajouter"
-            android:backgroundTint="@color/vert_principal"
-            android:textColor="@color/blanc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:text="Planifiez vos activités de la saison"
+                android:textSize="12sp"
+                android:textColor="#CCFFFFFF"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
     </LinearLayout>
 
-    <!-- Liste activités -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_activites"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingTop="4dp"
-        android:paddingBottom="8dp"
-        android:clipToPadding="false"/>
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- CARTE FORMULAIRE -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="@color/blanc">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Titre formulaire -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="20dp">
+
+                        <LinearLayout
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@color/vert_principal"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="+"
+                                android:textColor="@color/blanc"
+                                android:textSize="20sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="Nouvelle activité"
+                            android:textColor="@color/vert_principal"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <!-- Champ Culture -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_plant"
+                            android:contentDescription="culture"
+                            android:layout_marginEnd="10dp"
+                            app:tint="@color/vert_principal"/>
+
+                        <EditText
+                            android:id="@+id/edit_culture"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:hint="Culture (ex: Blé, Tomate...)"
+                            android:textColorHint="#9E9E9E"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:maxLines="1"/>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_arrow_down"
+                            android:contentDescription="dropdown"
+                            app:tint="@color/texte_gris"/>
+                    </LinearLayout>
+
+                    <!-- Champ Type -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_type"
+                            android:contentDescription="type"
+                            android:layout_marginEnd="10dp"
+                            app:tint="@color/vert_principal"/>
+
+                        <EditText
+                            android:id="@+id/edit_type"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:hint="Type (Semis, Irrigation, Récolte...)"
+                            android:textColorHint="#9E9E9E"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:maxLines="1"/>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_arrow_down"
+                            android:contentDescription="dropdown"
+                            app:tint="@color/texte_gris"/>
+                    </LinearLayout>
+
+                    <!-- Champ Date -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_calendrier"
+                            android:contentDescription="date"
+                            android:layout_marginEnd="10dp"
+                            app:tint="@color/vert_principal"/>
+
+                        <EditText
+                            android:id="@+id/edit_date"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:hint="Date (ex: 15/05/2026)"
+                            android:textColorHint="#9E9E9E"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:inputType="datetime"
+                            android:maxLines="1"/>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_calendrier"
+                            android:contentDescription="calendrier icon"
+                            app:tint="@color/texte_gris"/>
+                    </LinearLayout>
+
+                    <!-- Champ Note -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:background="@drawable/input_field_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:layout_marginBottom="20dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_note"
+                            android:contentDescription="note"
+                            android:layout_marginEnd="10dp"
+                            app:tint="@color/vert_principal"/>
+
+                        <EditText
+                            android:id="@+id/edit_note"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:hint="Note (optionnel)"
+                            android:textColorHint="#9E9E9E"
+                            android:textColor="#212121"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:maxLines="1"/>
+                    </LinearLayout>
+
+                    <!-- Bouton Ajouter -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_ajouter"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:text="+ AJOUTER L'ACTIVITÉ"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blanc"
+                        app:cornerRadius="12dp"
+                        app:backgroundTint="@color/vert_principal"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- SECTION LISTE -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_note"
+                    android:contentDescription="liste"
+                    app:tint="@color/vert_principal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="Activités enregistrées"
+                    android:textColor="#1A1A1A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <!-- RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_activites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
