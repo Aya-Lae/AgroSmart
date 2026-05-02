@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import com.example.tryproject.notifications.NotificationScheduler;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,6 +55,18 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         NavigationUI.setupWithNavController(bottomNav, navController);
+
+        // Référence à la barre du haut
+        LinearLayout barreHaut = findViewById(R.id.barre_haut);
+
+// Cacher/afficher selon la page
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.meteoFragment) {
+                barreHaut.setVisibility(View.GONE);
+            } else {
+                barreHaut.setVisibility(View.VISIBLE);
+            }
+        });
 
         // Bouton langue — APRÈS setContentView
         TextView btnLangue = findViewById(R.id.btn_langue);

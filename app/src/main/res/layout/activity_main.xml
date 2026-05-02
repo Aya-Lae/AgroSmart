@@ -8,6 +8,7 @@
 
     <!-- Barre du haut -->
     <LinearLayout
+        android:id="@+id/barre_haut"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/vert_principal"
