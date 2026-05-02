@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,9 +36,16 @@ public class CalendrierFragment extends Fragment {
         editType    = view.findViewById(R.id.edit_type);
         editDate    = view.findViewById(R.id.edit_date);
         editNote    = view.findViewById(R.id.edit_note);
-        Button btnAjouter = view.findViewById(R.id.btn_ajouter);
 
-        adapter = new ActiviteAdapter(activites, this::marquerFaite);
+        com.google.android.material.button.MaterialButton btnAjouter =
+                view.findViewById(R.id.btn_ajouter);
+
+        // Adapter avec 2 listeners : marquer faite + supprimer
+        adapter = new ActiviteAdapter(
+                activites,
+                this::marquerFaite,
+                this::supprimerActivite   // ← nouveau
+        );
         recyclerActivites.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerActivites.setAdapter(adapter);
 
@@ -66,7 +75,6 @@ public class CalendrierFragment extends Fragment {
             AgricoDatabase.getInstance(getContext()).activiteDao().ajouter(a);
 
             requireActivity().runOnUiThread(() -> {
-                activites.clear();
                 editCulture.setText("");
                 editType.setText("");
                 editDate.setText("");
@@ -96,17 +104,31 @@ public class CalendrierFragment extends Fragment {
         }).start();
     }
 
-    // Adapter
+    // ← NOUVELLE MÉTHODE
+    private void supprimerActivite(Activite activite) {
+        new Thread(() -> {
+            AgricoDatabase.getInstance(getContext())
+                    .activiteDao().supprimer(activite.id);
+            requireActivity().runOnUiThread(() -> chargerActivites());
+        }).start();
+    }
+
+    // ═══════════════ ADAPTER ═══════════════
     static class ActiviteAdapter extends RecyclerView.Adapter<ActiviteAdapter.ViewHolder> {
 
-        interface OnCheck { void onClick(Activite activite); }
+        interface OnCheck  { void onClick(Activite activite); }
+        interface OnDelete { void onClick(Activite activite); } // ← nouveau
 
         private List<Activite> activites;
-        private OnCheck listener;
+        private final OnCheck  listenerCheck;
+        private final OnDelete listenerDelete; // ← nouveau
 
-        ActiviteAdapter(List<Activite> activites, OnCheck listener) {
-            this.activites = activites;
-            this.listener  = listener;
+        ActiviteAdapter(List<Activite> activites,
+                        OnCheck listenerCheck,
+                        OnDelete listenerDelete) {
+            this.activites      = activites;
+            this.listenerCheck  = listenerCheck;
+            this.listenerDelete = listenerDelete;
         }
 
         @NonNull
@@ -120,18 +142,36 @@ public class CalendrierFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Activite a = activites.get(position);
+
             holder.titre.setText(a.type + " — " + a.culture);
             holder.date.setText(" " + a.date);
-            holder.note.setText(a.note);
+            holder.note.setText(a.note != null ? a.note : "");
+
+            // Badge type
             TextView badge = holder.itemView.findViewById(R.id.item_badge_type);
             if (badge != null) badge.setText(a.type);
+
+            // Checkbox
             holder.check.setChecked(a.faite);
-            // texte barré si fait
             holder.titre.setPaintFlags(a.faite
                     ? holder.titre.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
                     : holder.titre.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
             );
-            holder.check.setOnClickListener(v -> listener.onClick(a));
+            holder.check.setOnClickListener(v -> listenerCheck.onClick(a));
+
+            // ← MENU 3 POINTS
+            holder.menuBtn.setOnClickListener(v -> {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                popup.getMenu().add(0, 1, 0, "🗑️ Supprimer");
+                popup.setOnMenuItemClickListener(item -> {
+                    if (item.getItemId() == 1) {
+                        listenerDelete.onClick(a);
+                        return true;
+                    }
+                    return false;
+                });
+                popup.show();
+            });
         }
 
         @Override
@@ -140,12 +180,15 @@ public class CalendrierFragment extends Fragment {
         static class ViewHolder extends RecyclerView.ViewHolder {
             TextView titre, date, note;
             CheckBox check;
+            ImageView menuBtn; // ← nouveau
+
             ViewHolder(View v) {
                 super(v);
-                titre = v.findViewById(R.id.item_titre);
-                date  = v.findViewById(R.id.item_date);
-                note  = v.findViewById(R.id.item_note);
-                check = v.findViewById(R.id.check_faite);
+                titre   = v.findViewById(R.id.item_titre);
+                date    = v.findViewById(R.id.item_date);
+                note    = v.findViewById(R.id.item_note);
+                check   = v.findViewById(R.id.check_faite);
+                menuBtn = v.findViewById(R.id.item_menu); // ← nouveau
             }
         }
     }
