@@ -6,7 +6,7 @@ public class Message {
     public static final String AUTEUR_BOT = "assistant";
 
     public String texte;
-    public String auteur; // "user" ou "assistant"
+    public String auteur;
 
     public Message(String texte, String auteur) {
         this.texte = texte;

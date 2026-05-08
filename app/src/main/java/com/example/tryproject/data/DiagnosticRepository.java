@@ -1,108 +1,203 @@
 package com.example.tryproject.data;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.util.Base64;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class DiagnosticRepository {
+
+    private static final String API_KEY = "AIzaSyDJCOSFrkX6BS70kIGrNXOHXI5rLuFG1eY";
+
+    private static final String URL =
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key="
+                    + API_KEY;
+
+    private final OkHttpClient client = new OkHttpClient();
 
     public interface DiagnosticCallback {
         void onDiagnostic(String resultat);
     }
 
-    public void analyserPhoto(Bitmap photo, DiagnosticCallback callback) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(2000); // Simule le temps d'analyse
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    public void analyserPhoto(Bitmap photo,
+                              DiagnosticCallback callback) {
 
-            // Analyse basée sur les couleurs dominantes de la photo
-            String diagnostic = analyserCouleurs(photo);
-            callback.onDiagnostic(diagnostic);
-        }).start();
-    }
+        try {
 
-    private String analyserCouleurs(Bitmap bitmap) {
-        // Réduire la taille pour l'analyse
-        Bitmap petit = Bitmap.createScaledBitmap(bitmap, 50, 50, false);
+            /* CONVERTIR IMAGE EN BASE64 */
+            ByteArrayOutputStream baos =
+                    new ByteArrayOutputStream();
 
-        long rouge = 0, vert = 0, jaune = 0, marron = 0, total = 0;
+            photo.compress(
+                    Bitmap.CompressFormat.JPEG,
+                    80,
+                    baos
+            );
 
-        for (int x = 0; x < petit.getWidth(); x++) {
-            for (int y = 0; y < petit.getHeight(); y++) {
-                int pixel = petit.getPixel(x, y);
-                int r = Color.red(pixel);
-                int g = Color.green(pixel);
-                int b = Color.blue(pixel);
-                total++;
+            byte[] imageBytes = baos.toByteArray();
 
-                // Détection couleurs
-                if (r > 150 && g < 100 && b < 100) rouge++;        // Rouge = maladie
-                else if (g > 100 && r < 100 && b < 100) vert++;    // Vert = sain
-                else if (r > 150 && g > 150 && b < 80) jaune++;    // Jaune = carence
-                else if (r > 100 && g < 80 && b < 60) marron++;    // Marron = pourriture
-            }
-        }
+            String base64Image =
+                    Base64.encodeToString(
+                            imageBytes,
+                            Base64.NO_WRAP
+                    );
 
-        double pctRouge  = (rouge  * 100.0) / total;
-        double pctVert   = (vert   * 100.0) / total;
-        double pctJaune  = (jaune  * 100.0) / total;
-        double pctMarron = (marron * 100.0) / total;
+            /* PROMPT IA */
+            String prompt =
+                    String prompt =
+                    "Tu es AgroSmart MA, un assistant agricole marocain expert en maladies des plantes. " +
 
-        // Diagnostic selon couleur dominante
-        if (pctVert > 40) {
-            return "✅ Plante en bonne santé\n\n" +
-                    "Votre plante semble saine. La couleur verte dominante indique " +
-                    "une bonne chlorophylle.\n\n" +
-                    "💡 Conseils :\n" +
-                    "• Continuez l'arrosage régulier\n" +
-                    "• Vérifiez l'exposition au soleil\n" +
-                    "• Fertilisation mensuelle recommandée";
+                            "Analyse cette photo agricole avec précision. " +
 
-        } else if (pctJaune > 20) {
-            return "⚠️ Carence nutritionnelle détectée\n\n" +
-                    "Les feuilles jaunes indiquent une possible carence en azote " +
-                    "ou en fer (chlorose).\n\n" +
-                    "🔬 Diagnostic : Chlorose ferrique probable\n\n" +
-                    "💊 Traitement recommandé :\n" +
-                    "• Apport d'engrais riche en azote (N)\n" +
-                    "• Traitement au sulfate de fer\n" +
-                    "• Vérifier le pH du sol (idéal : 6.0-7.0)\n" +
-                    "• Arrosage modéré";
+                            "Réponds TOUJOURS en français simple, clair et adapté au mobile. " +
 
-        } else if (pctRouge > 15) {
-            return "🔴 Maladie fongique suspectée\n\n" +
-                    "Des taches rougeâtres ont été détectées. Cela peut indiquer " +
-                    "une rouille ou une alternariose.\n\n" +
-                    "🔬 Diagnostic probable : Rouille ou Alternaria\n\n" +
-                    "💊 Traitement recommandé :\n" +
-                    "• Retirer les feuilles atteintes immédiatement\n" +
-                    "• Traitement fongicide à base de cuivre\n" +
-                    "• Éviter de mouiller les feuilles\n" +
-                    "• Améliorer la ventilation\n" +
-                    "• Répéter le traitement après 10 jours";
+                            "N'utilise JAMAIS de markdown comme ** ou ###. " +
 
-        } else if (pctMarron > 15) {
-            return "🟤 Pourriture ou brûlure détectée\n\n" +
-                    "Les zones marron indiquent une possible pourriture racinaire " +
-                    "ou une brûlure due à la chaleur.\n\n" +
-                    "🔬 Diagnostic probable : Botrytis ou brûlure solaire\n\n" +
-                    "💊 Traitement recommandé :\n" +
-                    "• Réduire l'arrosage immédiatement\n" +
-                    "• Traitement fongicide systémique\n" +
-                    "• Protéger du soleil direct\n" +
-                    "• Vérifier le drainage du sol\n" +
-                    "• Supprimer les parties atteintes";
+                            "Utilise uniquement des emojis et des listes simples. " +
 
-        } else {
-            return "🔍 Analyse incomplète\n\n" +
-                    "La photo n'est pas suffisamment claire pour un diagnostic précis.\n\n" +
-                    "💡 Pour une meilleure analyse :\n" +
-                    "• Prenez la photo en pleine lumière\n" +
-                    "• Photographiez les feuilles atteintes de près\n" +
-                    "• Évitez les reflets et les ombres\n" +
-                    "• Décrivez aussi les symptômes par texte";
+                            "Structure toujours la réponse exactement comme ceci :\n\n" +
+
+                            "🔍 Diagnostic :\n" +
+                            "Nom probable de la maladie ou du problème.\n\n" +
+
+                            "⚠️ Gravité :\n" +
+                            "Faible, modérée ou élevée.\n\n" +
+
+                            "💡 Conseils :\n" +
+                            "• Conseil 1\n" +
+                            "• Conseil 2\n" +
+                            "• Conseil 3\n\n" +
+
+                            "💊 Traitement :\n" +
+                            "• Traitement 1\n" +
+                            "• Traitement 2\n\n" +
+
+                            "🌱 Prévention :\n" +
+                            "• Prévention 1\n" +
+                            "• Prévention 2\n\n" +
+
+                            "Les réponses doivent être courtes et très lisibles sur smartphone.";
+
+            /* TEXTE */
+            JSONObject textPart = new JSONObject();
+            textPart.put("text", prompt);
+
+            /* IMAGE */
+            JSONObject inlineData = new JSONObject();
+            inlineData.put("mime_type", "image/jpeg");
+            inlineData.put("data", base64Image);
+
+            JSONObject imagePart = new JSONObject();
+            imagePart.put("inline_data", inlineData);
+
+            /* PARTS */
+            JSONArray parts = new JSONArray();
+            parts.put(textPart);
+            parts.put(imagePart);
+
+            /* CONTENT */
+            JSONObject content = new JSONObject();
+            content.put("parts", parts);
+
+            JSONArray contents = new JSONArray();
+            contents.put(content);
+
+            /* BODY */
+            JSONObject body = new JSONObject();
+            body.put("contents", contents);
+
+            RequestBody requestBody =
+                    RequestBody.create(
+                            body.toString(),
+                            MediaType.get("application/json")
+                    );
+
+            Request request = new Request.Builder()
+                    .url(URL)
+                    .post(requestBody)
+                    .build();
+
+            client.newCall(request)
+                    .enqueue(new Callback() {
+
+                        @Override
+                        public void onFailure(Call call,
+                                              IOException e) {
+
+                            callback.onDiagnostic(
+                                    "❌ Erreur : "
+                                            + e.getMessage()
+                            );
+                        }
+
+                        @Override
+                        public void onResponse(Call call,
+                                               Response response)
+                                throws IOException {
+
+                            if (!response.isSuccessful()) {
+
+                                String erreur =
+                                        response.body() != null
+                                                ? response.body().string()
+                                                : "Erreur inconnue";
+
+                                callback.onDiagnostic(
+                                        "❌ Erreur API : "
+                                                + response.code()
+                                                + "\n"
+                                                + erreur
+                                );
+
+                                return;
+                            }
+
+                            try {
+
+                                String responseBody =
+                                        response.body().string();
+
+                                JSONObject json =
+                                        new JSONObject(responseBody);
+
+                                String resultat =
+                                        json.getJSONArray("candidates")
+                                                .getJSONObject(0)
+                                                .getJSONObject("content")
+                                                .getJSONArray("parts")
+                                                .getJSONObject(0)
+                                                .getString("text");
+
+                                callback.onDiagnostic(resultat);
+
+                            } catch (Exception e) {
+
+                                callback.onDiagnostic(
+                                        "❌ Erreur analyse : "
+                                                + e.getMessage()
+                                );
+                            }
+                        }
+                    });
+
+        } catch (Exception e) {
+
+            callback.onDiagnostic(
+                    "❌ Erreur : "
+                            + e.getMessage()
+            );
         }
     }
 }
